@@ -1,2 +1,1 @@
-Sunday April 14th - End of driver's practice - Headed to Houston!
-Sunday September 9th - driver practice
+Code after Chezy Champs and KCMT with a few improvements from the fall.
