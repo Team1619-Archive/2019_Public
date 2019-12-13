@@ -1,0 +1,109 @@
+body {
+    display: flex;
+}
+
+table {
+    margin-top: 3vh;
+    margin-left: 2vw;
+    background: var(--foreground);
+    color: whitesmoke;
+    border-radius: 1vmin;
+}
+
+thead {
+    display: block;
+    width: 100%;
+}
+
+tbody {
+    display: block;
+    overflow: auto;
+    height: 84vh;
+    border: lightgrey;
+    border: 1px;
+}
+
+th {
+    font-size: 3vw;
+    min-width: 14.5vw;
+    padding: 1vmin;
+}
+
+td {
+    font-size: 2vw;
+    min-width: 10vw;
+    min-height: 3vh;
+    padding: 1vmin;
+}
+
+.typeCell {
+    max-width: 10vw !important;
+}
+
+h2.form {
+    color: var(--background);
+    margin: 2%;
+}
+
+button.form {
+    position: relative;
+    top: 5%;
+    width: 50%;
+    height: 20%;
+    padding: 0.6% 5% 0.6% 5%;
+    margin: 2% 0% 2% 0%;
+    border-radius: 2vh;
+    border-width: 0;
+    font-size: 5vmin;
+    color: darkslategrey;
+}
+
+select.form {
+    margin: 0;
+    width: 80%;
+    height: 15%;
+    font-size: 4vmin;
+    background: var(--white);
+    color: var(--foreground);
+}
+
+input.form {
+    position: relative;
+    top: 5%;
+    width: 60%;
+    height: 90%;
+    font-size: 5vmin;
+    border-width: 1px;
+    margin-bottom: 1vh;
+    border-color: var(--background);
+    background: var(--white);
+    color: var(--foreground);
+}
+
+div.form {
+    background: var(--white);
+    position: absolute;
+    visibility: hidden;
+    border-radius: 3vh;
+    border-width: 0;
+    left: 15%;
+    top: 15vh;
+    width: 70%;
+    height: auto;
+    text-align: center;
+}
+
+h1.form {
+    margin-bottom: 2vh;
+}
+
+.draggableViewer {
+    position: absolute;
+    background: var(--foreground);
+    color: var(--white);
+    margin: 4px;
+    padding: 6px;
+    border-radius: 4px;
+    width: auto;
+    font-size: 3vmin;
+}

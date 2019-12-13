@@ -1,0 +1,248 @@
+talon:
+  mo_left_drive_primary:
+    device_number: 15
+    inverted: true
+    feedback_device: quad_encoder
+    sensor_inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+    counts_per_unit: 209.0
+    #Example max_counts_per_100ms: 500 * 1440 / 600.0 = 1200
+    #Where 500 is max rpm, 1440 is count per revolution, and 600 is the number of 100ms is 1 minute aka 1 minute / 100ms
+    max_counts_per_100ms: 1200.0
+    profiles:
+      pr_pure_pursuit:
+        f: 2.0
+        p: 1.0
+        i: 0.0
+        d: 0.0
+
+  mo_left_drive_follower_1:
+    device_number: 14
+    inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+
+  mo_left_drive_follower_2:
+    device_number: 13
+    inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+
+  mo_right_drive_primary:
+    device_number: 0
+    inverted: false
+    feedback_device: quad_encoder
+    sensor_inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+    counts_per_unit: 209.0
+    max_counts_per_100ms: 1200.0
+    profiles:
+      pr_pure_pursuit:
+        f: 2.0
+        p: 1.0
+        i: 0.0
+        d: 0.0
+
+  mo_right_drive_follower_1:
+    device_number: 1
+    inverted: false
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+
+  mo_right_drive_follower_2:
+    device_number: 2
+    inverted: false
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 45
+    peak_current_duration_milliseconds: 100
+
+  mo_elevator_primary:
+    device_number: 10
+    inverted: false
+    sensor_inverted: true
+    feedback_device: quad_encoder
+    counts_per_unit: 50.0
+    profiles:
+      pr_elevator:
+        f: 0.0
+        p: 2.0
+        i: 0.0
+        d: 10.0
+        acceleration: 1000
+        cruise_velocity: 500
+
+  mo_elevator_secondary:
+    device_number: 9
+    inverted: false
+
+  mo_ball_collector_pivot:
+    device_number: 3
+    feedback_device: quad_encoder
+    inverted: true
+    counts_per_unit: 8.4
+    profiles:
+      pr_idle:
+        f: 0.5
+        p: 3.0
+        i: 0.0
+        d: 40.0
+        acceleration: 500
+        cruise_velocity: 500
+      pr_down:
+        f: 0.5
+        p: 3.0
+        i: 0.0
+        d: 40.0
+        acceleration: 800
+        cruise_velocity: 800
+      pr_up:
+        f: 0.5
+        p: 3.0
+        i: 0.0
+        d: 40.0
+        acceleration: 800
+        cruise_velocity: 800
+
+  mo_ball_collector_roller:
+    device_number: 4
+    inverted: false
+
+  mo_climber_master:
+    device_number: 12
+    feedback_device: quad_encoder
+    inverted: true
+    sensor_inverted: true
+    counts_per_unit: 1044.0
+    profiles:
+      pr_deploy:
+        f: 0.5
+        p: 1.0
+        i: 0.0
+        d: 40.0
+        acceleration: 4000
+        cruise_velocity: 4000
+      pr_lock_on:
+        f: 0.5
+        p: 1.0
+        i: 0.0
+        d: 40.0
+        acceleration: 4000
+        cruise_velocity: 4000
+      pr_climb:
+        f: 0.5
+        p: 1.0
+        i: 0.0
+        d: 40.0
+        acceleration: 4000
+        cruise_velocity: 4000
+
+  mo_climber_follower:
+    device_number: 11
+    inverted: true
+
+  mo_vacuum_pump_1:
+    device_number: 6
+    inverted: false
+
+  mo_vacuum_pump_2:
+    device_number: 5
+    inverted: false
+
+victor:
+  victor_test:
+    device_number: 7
+
+motor_group:
+
+  mo_vacuum_pump:
+    master: mo_vacuum_pump_1
+    followers: [mo_vacuum_pump_2]
+
+  mo_drive_left:
+    master: mo_left_drive_primary
+    followers: [mo_left_drive_follower_1, mo_left_drive_follower_2]
+
+  mo_drive_right:
+    master: mo_right_drive_primary
+    followers: [mo_right_drive_follower_1, mo_right_drive_follower_2]
+
+  mo_elevator_group:
+    master: mo_elevator_primary
+    followers: [mo_elevator_secondary]
+
+  mo_climber_group:
+    master: mo_climber_master
+    followers: [mo_climber_follower]
+
+rumble:
+  mo_driver_left_rumble:
+    port: 0
+    rumble_side: left
+  mo_driver_right_rumble:
+    port: 0
+    rumble_side: right
+
+variations:
+  practicebot:
+    talon:
+      mo_left_drive_primary:
+        counts_per_unit: 20.3
+        profiles:
+          pr_pure_pursuit:
+            f: 0.05
+            p: 1.0
+      mo_right_drive_primary:
+        counts_per_unit: 20.3
+        profiles:
+          pr_pure_pursuit:
+            f: 0.05
+            p: 1.0
+      mo_ball_collector_pivot:
+        device_number: 3
+        feedback_device: quad_encoder
+        inverted: true
+        counts_per_unit: 23.0
+        profiles:
+          pr_idle:
+            f: 0.5
+            p: 2.0
+            i: 0.0
+            d: 40.0
+            acceleration: 500
+            cruise_velocity: 500
+          pr_down:
+            f: 0.5
+            p: 2.0
+            i: 0.0
+            d: 40.0
+            acceleration: 1400
+            cruise_velocity: 1000
+          pr_up:
+            f: 0.5
+            p: 2.0
+            i: 0.0
+            d: 40.0
+            acceleration: 1000
+            cruise_velocity: 1000
+      mo_elevator_primary:
+        profiles:
+          pr_elevator:
+            f: 0.5
+            p: 2.0
+            i: 0.0
+            d: 10.0
+            acceleration: 1000
+            cruise_velocity: 500

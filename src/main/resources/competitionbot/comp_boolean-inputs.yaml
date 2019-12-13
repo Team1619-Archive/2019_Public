@@ -1,0 +1,107 @@
+controller_button:
+  bi_driver_a:
+    port: 0
+    button: a
+  bi_driver_b:
+    port: 0
+    button: b
+  bi_driver_y:
+    port: 0
+    button: y
+  bi_driver_x:
+    port: 0
+    button: x
+  bi_driver_left_bumper:
+    port: 0
+    button: left_bumper
+  bi_driver_right_bumper:
+    port: 0
+    button: right_bumper
+  bi_driver_left_trigger:
+    port: 0
+    button: left_trigger
+  bi_driver_right_trigger:
+    port: 0
+    button: right_trigger
+  bi_driver_dpad_up:
+    port: 0
+    button: d_pad_up
+  bi_driver_dpad_down:
+    port: 0
+    button: d_pad_down
+  bi_driver_dpad_left:
+    port: 0
+    button: d_pad_left
+  bi_driver_dpad_right:
+    port: 0
+    button: d_pad_right
+  bi_driver_back:
+    port: 0
+    button: back
+  bi_driver_start:
+    port: 0
+    button: start
+  bi_driver_left_stick_button:
+    port: 0
+    button: left_stick_button
+  bi_driver_right_stick_button:
+    port: 0
+    button: right_stick_button
+
+  bi_operator_a:
+    port: 1
+    button: a
+  bi_operator_b:
+    port: 1
+    button: b
+  bi_operator_y:
+    port: 1
+    button: y
+  bi_operator_x:
+    port: 1
+    button: x
+  bi_operator_left_bumper:
+    port: 1
+    button: left_bumper
+  bi_operator_right_bumper:
+    port: 1
+    button: right_bumper
+  bi_operator_left_trigger:
+    port: 1
+    button: left_trigger
+  bi_operator_right_trigger:
+    port: 1
+    button: right_trigger
+  bi_operator_dpad_up:
+    port: 1
+    button: d_pad_up
+  bi_operator_dpad_down:
+    port: 1
+    button: d_pad_down
+  bi_operator_dpad_left:
+    port: 1
+    button: d_pad_left
+  bi_operator_dpad_right:
+    port: 1
+    button: d_pad_right
+  bi_operator_back:
+    port: 1
+    button: back
+  bi_operator_start:
+    port: 1
+    button: start
+  bi_operator_left_stick_button:
+    port: 1
+    button: left_stick_button
+  bi_operator_right_stick_button:
+    port: 1
+    button: right_stick_button
+
+digital_input:
+  bi_elevator_limit_switch:
+    id: 0
+    inverted: true
+  bi_ball_collector_beam_sensor:
+    id: 1
+    inverted: true
+ 

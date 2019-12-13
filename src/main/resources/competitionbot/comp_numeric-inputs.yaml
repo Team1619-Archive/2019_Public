@@ -1,0 +1,116 @@
+controller_axis:
+  ni_driver_left_y:
+    port: 0
+    axis: 1
+    deadband: 0.15
+    inverted: true
+
+  ni_driver_left_x:
+    port: 0
+    axis: 2
+
+  ni_driver_right_y:
+    port: 0
+    axis: 5
+
+  ni_driver_right_x:
+    port: 0
+    axis: 4
+    deadband: 0.15
+    scale: 0.5
+
+  ni_operator_left_y:
+    port: 1
+    axis: 1
+    deadband: 0.15
+    inverted: true
+    scale: 0.25
+
+  ni_operator_left_x:
+    port: 1
+    axis: 2
+
+  ni_operator_right_y:
+    port: 1
+    axis: 5
+    inverted: true
+    scale: 0.1
+    deadband: 0.15
+
+  ni_operator_right_x:
+    port: 1
+    axis: 4
+
+analog_sensor:
+  ni_climb_vacuum_sensor:
+    port: 0
+
+variations:
+  practicebot:
+    controller_axis:
+      ni_operator_right_y:
+        scale: 0.25
+
+#position_sensor:
+#
+#  ni_drive_left_position:
+#    device_number: 15
+#    feedback_device: quad_encoder
+#    counts_per_unit: 204.3
+#    unit: inch
+#    inverted: false
+#    hardware_inverted: true
+#
+#  ni_drive_right_position:
+#    device_number: 0
+#    feedback_device: quad_encoder
+#    counts_per_unit: 204.3
+#    unit: inch
+#    inverted: false
+#    hardware_inverted: true
+#
+#  ni_elevator_position:
+#    device_number: 10
+#    feedback_device: quad_encoder
+#    counts_per_unit: 49.45
+#    unit: inch
+#    inverted: true
+#
+#  ni_ball_collector_position:
+#    device_number: 3
+#    feedback_device: quad_encoder
+#    counts_per_unit: 27.0
+#    unit: degrees
+#    inverted: true
+#
+#  ni_climber_position:
+#    device_number: 12
+#    feedback_device: quad_encoder
+#    counts_per_unit: 1035.0
+#    unit: inch
+#    inverted: false
+#
+#velocity_sensor:
+#  ni_elevator_velocity:
+#    device_number: 10
+#    feedback_device: quad_encoder
+#    counts_per_unit: 49.45
+#    unit: inch / sec
+#    inverted: true
+#
+#  ni_ball_collector_pivot_velocity:
+#    device_number: 3
+#    feedback_device: quad_encoder
+#    counts_per_unit: 27.0
+#    unit: degrees / sec
+#    inverted: true
+#
+#  ni_climber_velocity:
+#    device_number: 12
+#    feedback_device: quad_encoder
+#    counts_per_unit: 27.0
+#    unit: degrees / sec
+#    inverted: false
+
+
+

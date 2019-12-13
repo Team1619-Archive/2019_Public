@@ -1,0 +1,31 @@
+general:
+  states: [st_drive_percent]
+  subsystems: [ss_drive]
+  boolean_inputs: [bi_driver_left_trigger]
+  numeric_inputs: [ni_driver_left_y, ni_driver_right_x]
+  vector_inputs: []
+  motors: [mo_drive_left, mo_drive_right]
+  solenoids: [so_drive_gear]
+
+global_timing:
+  input_service_max_frame_time: 150
+  logger_service_max_frame_time: 150
+  ouput_service_max_frame_time: 150
+  state_service_max_frame_time: 150
+  web_service_max_frame_time: 150
+
+log:
+  ni_driver_x: true
+  ni_driver_y: true
+  bi_driver_left_trigger: true
+  ni_climb_vacuum_sensor: true
+
+global_drive:
+  x: ni_driver_right_x
+  y: ni_driver_left_y
+  gear_shift_button: bi_driver_left_trigger
+
+web_dashboard_match_values:
+  bi_driver_left_trigger:
+    type: boolean
+    display_name: Test Value

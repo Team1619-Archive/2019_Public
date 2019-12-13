@@ -1,0 +1,24 @@
+button.form {
+    position: relative;
+    top: 5%;
+    margin-top: 5%;
+    width: 50%;
+    height: 20%;
+    border-radius: 2vh;
+    border-width: 0;
+    font-size: 5vmin;
+    color: darkslategrey;
+}
+
+div.form {
+    background: var(--white);
+    position: absolute;
+    visibility: hidden;
+    border-radius: 3vh;
+    border-width: 0;
+    left: 20%;
+    top: 30%;
+    width: 60%;
+    height: 40%;
+    text-align: center;
+}

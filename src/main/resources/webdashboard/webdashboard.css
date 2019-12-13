@@ -1,0 +1,146 @@
+div.tab {
+    background: var(--foreground);
+    width: 100%;
+    height: 8vh;
+}
+
+div.connectedwrapper {
+    display: flex;
+    flex-direction: row;
+    float: right;
+    width: auto;
+    height: 8vh;
+    margin-right: 0.5vw;
+}
+
+div.connected {
+    border-radius: 2vmin;
+    float: none;
+    width: 0.7vw;
+    height: 8vh;
+    margin-right: 0.2vw;
+}
+
+div.connectedbar {
+    border-radius: 2vmin;
+    background: var(--red);
+    animation: display-connection-bar 1000ms;
+}
+
+button.tablink {
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0vh 0.5vw 0vh 0.5vw;
+    transition: 0.3s;
+    font-size: 5vmin;
+    min-width: 8vw;
+    height: 8vh;
+    animation: expand-tab-link 1000ms;
+}
+
+button.tablink:hover {
+    color: var(--white);
+}
+
+button.tablink:active {
+    background-color: inherit;
+    color: var(--white);
+}
+
+button.unselectedtablink {
+    background: var(--foreground);
+    color: var(--background);
+}
+
+button.selectedtablink {
+    background: var(--background);
+    color: var(--foreground);
+}
+
+.tabcontent {
+    border: 0;
+    color: lightgrey;
+    display: none;
+    padding: 0;
+    width: 100%;
+    height: 92vh;
+}
+
+.selectedtabcontent {
+    display: block;
+    animation: display-tab-content 750ms;
+}
+
+button.form {
+    position: relative;
+    top: 5%;
+    width: 40%;
+    height: 90%;
+    border-radius: 2vh;
+    border-width: 0;
+    font-size: 5vmin;
+    color: darkslategrey;
+}
+
+button.standard {
+    position: relative;
+    top: 5%;
+    width: 40%;
+    height: 90%;
+    border-radius: 1vh;
+    border-width: 0;
+    font-size: 5vmin;
+    color: white;
+    background: mediumslateblue;
+}
+
+select.form {
+    position: relative;
+    top: 5%;
+    width: 60%;
+    height: 90%;
+    font-size: 5vmin;
+    background: var(--white);
+    color: var(--foreground);
+}
+
+div.form {
+    background: var(--white);
+    position: absolute;
+    visibility: hidden;
+    border-radius: 3vh;
+    border-width: 0;
+    left: 17%;
+    top: 30%;
+    width: 60%;
+    height: 40%;
+    text-align: center;
+}
+
+@keyframes expand-tab-link {
+    0% {
+        font-size: 0;
+    }
+}
+
+@keyframes display-connection-bar {
+    0% {
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes display-tab-content {
+    0% {
+        opacity: 0;
+    }
+}

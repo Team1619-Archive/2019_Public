@@ -1,0 +1,13 @@
+solenoid_double:
+
+  so_crossbow_main:
+    device_number_master: 6
+    device_number_slave: 1
+
+  so_crossbow_wings:
+    device_number_master: 0
+    device_number_slave: 7
+
+  so_gear_shifter:
+    device_number_master: 4
+    device_number_slave: 3

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <bytecodeTargetLevel>
+      <module name="framework_main" target="1.8" />
+      <module name="framework_test" target="1.8" />
+      <module name="org.team1619-2019-framwork_main" target="1.8" />
+      <module name="org.team1619-2019-framwork_test" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

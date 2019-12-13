@@ -1,0 +1,29 @@
+limelight:
+  vi_limelight_top:
+    host: top
+  vi_limelight_bottom:
+    host: bottom
+
+odometry_input:
+  vi_odometry:
+    left_encoder: ni_left_drive_primary_position
+    right_encoder: ni_right_drive_primary_position
+    navx: vi_navx
+
+navx:
+  vi_navx:
+#    yaw_is_radians: true
+#    roll_is_radians: true
+#    pitch_is_radians: true
+#    angle_is_radians: true
+#    compass_is_radians: true
+#    fused_heading_is_radians: true
+#    yaw_is_inverted: true
+#    roll_is_inverted: true
+#    pitch_is_inverted: true
+#    angle_is_inverted: true
+#    compass_is_inverted: true
+#    fused_heading_is_inverted: true
+#    accel_x_is_inverted: true
+#    accel_y_is_inverted: true
+#    accel_z_is_inverted: true

@@ -1,0 +1,6 @@
+single_state:
+  st_drive_percent:
+    behavior: bh_drive_percent
+    behavior_config:
+      x_axis_scale: .5
+      reduce_turn_speed_button: bi_driver_right_bumper

@@ -1,0 +1,3 @@
+solenoid_single:
+  so_drive_gear:
+    device_number: 0

@@ -1,0 +1,168 @@
+general:
+  states: [
+    sq_full_system_check, sq_manipulators_check, sq_drivetrain_check, sq_elevator_check, sq_ball_arm_check, sq_crossbow_check,
+    pl_protect, pl_protect_all, pl_lldirect_extend_crossbow, pl_elevator_mid_extend_crossbow,
+    sq_auto_left_rocketleft_frontlow, sq_auto_left_rocketleft_backlow, sq_auto_left_rocketleft_doublelow, sq_auto_right_rocketright_frontlow, sq_auto_right_rocketright_backlow, sq_auto_right_rocketright_doublelow, sq_auto_left_rocketleft_doublemid, sq_auto_right_rocketright_doublemid,
+    sq_climb_automated, sq_place_hatch_high, sq_place_hatch_mid, sq_place_hatch_low, sq_hatch_collect, sq_ball_collect_floor, sq_place_ball_low, sq_place_ball_mid, sq_place_ball_cargoship, sq_place_ball_high,
+    st_drive_zero, st_drive_straight, st_drive_lldirect, st_drive_lldirect_auto, st_drive_percent, st_drive_auto_spin_in_place, st_drive_auto_straight,
+    st_drive_left_rocketleftfront, st_drive_leftrocketfront_leftrocketfrontbackup, st_drive_left_rocketleftback, st_drive_rocketleftback_rocketleftbackbackup, st_drive_rocketleftbackbackup_loadingstationleft, st_drive_loadingstationleft_loadingstationleftbackup,
+    st_drive_right_rocketrightfront, st_drive_rightrocketfront_rightrocketfrontbackup, st_drive_right_rocketrightback, st_drive_rocketrightback_rocketrightbackbackup, st_drive_rocketrightbackbackup_loadingstationright, st_drive_loadingstationright_loadingstationrightbackup,
+    st_elevator_zero, st_elevator_manual, st_elevator_protect, st_elevator_hatch_high_wait, st_elevator_hatch_mid_wait, st_elevator_low_wait, st_elevator_ball_high_wait, st_elevator_ball_mid_wait, st_elevator_cargoship_wait, st_elevator_hatch_high, st_elevator_hatch_mid, st_elevator_low, st_elevator_ball_high, st_elevator_ball_mid, st_elevator_cargoship,
+    st_crossbow_manual, st_crossbow_zero, st_crossbow_extend, st_crossbow_retract, st_crossbow_retract_and_release, st_cb_release_wait, st_crossbow_release,
+    st_ball_collector_zero, st_ball_collector_manual, st_ball_collector_protect, st_ball_collector_stow_wait, st_ball_collector_place_rocket_wait, st_ball_collector_place_cargoship_wait, st_ball_collector_collect_floor_wait, st_ball_collector_stow, st_ball_collector_place_rocket, st_ball_collector_place_cargoship, st_ball_collector_collect_floor,
+    st_climb_manual, st_climb_zero, st_climb_idle, st_climb_manual_override, st_climb_deploy, st_climb_lock_on, st_climb_climb
+  ]
+  subsystems: [ss_drive, ss_elevator, ss_crossbow, ss_ball_collector, ss_climber]
+  boolean_inputs: [
+    bi_elevator_limit_switch, bi_ball_collector_beam_sensor,
+    bi_driver_a, bi_driver_b, bi_driver_y, bi_driver_x, bi_driver_left_bumper, bi_driver_right_bumper, bi_driver_left_trigger, bi_driver_right_trigger, bi_driver_dpad_up, bi_driver_dpad_down, bi_driver_dpad_left, bi_driver_dpad_right, bi_driver_back, bi_driver_start, bi_driver_left_stick_button, bi_driver_right_stick_button,
+    bi_operator_a, bi_operator_b, bi_operator_y, bi_operator_x, bi_operator_left_bumper, bi_operator_right_bumper, bi_operator_left_trigger, bi_operator_right_trigger, bi_operator_dpad_up, bi_operator_dpad_down, bi_operator_dpad_left, bi_operator_dpad_right, bi_operator_back, bi_operator_start, bi_operator_left_stick_button, bi_operator_right_stick_button,
+  ]
+  numeric_inputs: [
+    ni_climb_vacuum_sensor,
+    ni_driver_left_y, ni_driver_left_x, ni_driver_right_y, ni_driver_right_x,
+    ni_operator_left_y, ni_operator_left_x, ni_operator_right_y, ni_operator_right_x
+  ]
+  vector_inputs: [vi_limelight_top, vi_limelight_bottom, vi_navx, vi_odometry]
+  motors: [mo_drive_left, mo_drive_right, mo_elevator_group, mo_ball_collector_pivot, mo_vacuum_pump, mo_ball_collector_roller, mo_climber_group, mo_driver_left_rumble, mo_driver_right_rumble]
+  solenoids: [so_crossbow_main, so_crossbow_wings, so_gear_shifter]
+
+teleop_controls:
+  manual_mode_button: bi_operator_back
+  test_mode_button: bi_operator_start
+
+global_timing:
+  input_service_max_frame_time: 150
+  logger_service_max_frame_time: 150
+  ouput_service_max_frame_time: 150
+  state_service_max_frame_time: 150
+  web_service_max_frame_time: 150
+
+global_drive:
+  x: ni_driver_right_x
+  y: ni_driver_left_y
+  right_rumble: mo_driver_right_rumble
+  left_rumble: mo_driver_left_rumble
+  rumble_output_value: 1
+  elevator_min_ramping_output: 0.6
+  alignment_min_output: 0.25
+  alignment_max_output: 0.6
+  alignment_min_output_angle: 8.0
+  gear_shift_button: bi_driver_left_trigger
+  lldirect_track_width: 5.0
+  pure_pursuit_track_width: 20.0
+  ll_adjust_left: bi_operator_dpad_left
+  ll_adjust_right: bi_operator_dpad_right
+  gear_shift_delay: 500
+
+global_elevator:
+  error_threshold: 5.0
+  elevator_max_height: 58.75
+  encoder: ni_elevator_primary_position
+  y_axis: ni_operator_left_y
+  velocity: ni_elevator_velocity
+  limit_switch: bi_elevator_limit_switch
+  zero_timeout_time: 2000
+  motion_magic_timeout: 2000
+
+global_ball_collector:
+  zero_velocity_error_threshold: 5.0
+  roller_trigger: bi_operator_right_trigger
+  pivot_axis: ni_operator_right_y
+  eject_button: bi_driver_right_trigger
+  beam_sensor: bi_ball_collector_beam_sensor
+  ball_collector_encoder: ni_ball_collector_pivot_position
+  ball_collector_velocity: ni_ball_collector_pivot_velocity
+  pid_threshold: 5
+  intake_roller_speed: -0.75
+  eject_roller_speed: 0.75
+  hold_roller_speed: -0.3
+  beam_sensor_trip_time: 500
+  max_collect_position: 120.0
+  timeout_time: 2000
+
+global_crossbow:
+  main_solenoid_button: bi_operator_y
+  crossbow_max_safe_ball_collector_position: 20.0
+  wings_button: bi_driver_right_trigger
+  ball_encoder: ni_ball_collector_pivot_position
+  main_solenoid_wait_time: 500
+
+global_climber:
+  button_up: bi_driver_dpad_up
+  button_down: bi_driver_dpad_down
+  button_lock_on: bi_driver_dpad_right
+  manual_adjust_override_button: bi_driver_start
+  climber_encoder: ni_climber_master_position
+  climber_velocity: ni_climber_master_velocity
+  vacuum_pump_button: bi_driver_back
+  vacuum_sensor: ni_climb_vacuum_sensor
+  manual_speed: 0.25
+  vacuum_pump_speed: 0.50
+  min_vacuum_threshold: 3.2
+  max_vacuum_threshold: 3.7
+  safe_to_climb_vacuum_level: 3.0
+  error_threshold: 0.5
+  error_timer_length: 100
+
+log:
+  ni_input_service_frame_time: false
+  ni_logging_service_frame_time: false
+  ni_output_service_frame_time: false
+  ni_state_service_frame_time: false
+  ni_web_service_frame_time: false
+  bi_elevator_has_been_zeroed: false
+  bi_climber_has_been_zeroed: false
+  bi_ball_collector_has_been_zeroed: false
+  bi_elevator_limit_switch: false
+  bi_ball_collector_beam_sensor: false
+  bi_ball_collector_retract_wings: false
+  mo_ball_collector_pivot: false
+  bi_crossbow_wings_retracted: false
+  ni_climber_position: false
+  vi_limelight: false
+  vi_navx: false
+
+  ni_climb_vacuum_sensor: true
+  si_selected_auto: true
+  bi_has_been_zeroed: true
+  bi_climb_enabled: true
+  si_mode: true
+
+web_dashboard_match_values:
+  si_selected_auto:
+    display_name: Auto
+    type: value
+  ni_climb_vacuum_sensor:
+    type: dial
+    display_name: Vacuum Sensor
+    min: 0
+    max: 4
+  bi_has_been_zeroed:
+    type: boolean
+    display_name: Robot Zeroed
+#  bi_elevator_has_been_zeroed:
+#    type: boolean
+#    display_name: Elevator Zeroed
+#  bi_climber_has_been_zeroed:
+#    type: boolean
+#    display_name: Climber Zeroed
+#  bi_ball_collector_has_been_zeroed:
+#    type: boolean
+#    display_name: Ball Collector Zeroed
+  bi_climb_enabled:
+    type: boolean
+    display_name: Climb Enabled
+  si_mode:
+    type: value
+    display_name: Mode
+
+variations:
+  practicebot:
+    global_drive:
+      lldirect_track_width: 10.0
+      pure_pursuit_track_width: 40.0
+    global_climber:
+      vacuum_pump_speed: 0.50
+      min_vacuum_threshold: 3.2
+      max_vacuum_threshold: 3.4

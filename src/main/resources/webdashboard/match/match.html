@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Match</title>
+    <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
+    <link rel="stylesheet" href="/pages/webdashboard/match/match.css">
+</head>
+<body ondblclick="chooseAuto()">
+<div id="autoPopup"
+     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+    <div class="form" style="height: auto; padding: 3%">
+        <div style="position: relative; top: 10%; height: 20%;">
+            <select id="autoOriginSelector" class="form" style="margin-bottom: 2%"></select>
+            <select id="autoDestinationSelector" class="form" style="margin-bottom: 2%"></select>
+            <select id="autoActionSelector" class="form" style="margin-bottom: 2%"></select>
+        </div>
+        <div style="position: relative; top: 50%; height: 20%;">
+            <button class="form" onclick="closeChooseAuto(false)" onmouseover=""
+                    style="width: 30%; background: var(--red)">Cancel
+            </button>
+            <button class="form" onclick="closeChooseAuto(true)" style="background: var(--green)">Select</button>
+        </div>
+    </div>
+</div>
+
+<div class="grid">
+    <div id="mainCamera" class="camera"></div>
+    <div id="secondaryCamera1" class="camera"></div>
+    <div id="secondaryCamera2" class="camera"></div>
+    <div id="valuesContainer" class="unselectable"></div>
+</div>
+
+<script src="/pages/webdashboard/assets/jquery.js"></script>
+<script src="/pages/webdashboard/assets/jqueryknob.js"></script>
+<script src="/pages/webdashboard/assets/urlformdata.js"></script>
+<script src="/pages/webdashboard/match/match.js"></script>
+</body>
+</html>

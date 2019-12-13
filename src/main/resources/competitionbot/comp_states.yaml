@@ -1,0 +1,429 @@
+single_state:
+
+  # ------ Drive ------
+
+  st_drive_zero:
+    behavior: bh_drive_zero
+    behavior_config:
+
+  st_drive_percent:
+    behavior: bh_drive_percent
+    behavior_config:
+      x_axis_scale: 0.5
+      reduce_turn_speed_button: bi_driver_right_bumper
+
+  st_drive_auto_straight:
+    behavior: bh_drive_percent_auto
+    behavior_config:
+      drive_speed_left: 0.3
+      drive_speed_right: 0.3
+      time: 2000
+
+  st_drive_auto_spin_in_place:
+    behavior: bh_drive_percent_auto
+    behavior_config:
+      drive_speed_left: 0.3
+      drive_speed_right: -0.3
+      time: 2000
+
+  st_drive_lldirect:
+    behavior: bh_drive_lldirect
+    behavior_config:
+      drive_speed_scale: 0.5
+
+  st_drive_lldirect_auto:
+    behavior: bh_drive_lldirect_auto
+    behavior_config:
+      drive_speed: 0.5
+      close_distance: 2.0
+
+  st_drive_straight:
+    behavior: bh_drive_straight
+    behavior_config:
+      axis: ni_driver_left_y
+
+  # ------ Pure Pursuit ------
+
+  st_drive_left_rocketleftfront:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_left_rocketleftfront
+
+  st_drive_leftrocketfront_leftrocketfrontbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_leftrocketfront_leftrocketfrontbackup
+      reversed: true
+
+  st_drive_left_rocketleftback:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_left_rocketleftback
+      reversed: true
+
+  st_drive_rocketleftback_rocketleftbackbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_rocketleftback_rocketleftbackbackup
+      reversed: true
+
+  st_drive_rocketleftbackbackup_loadingstationleft:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_rocketleftbackbackup_loadingstationleft
+      reversed: false
+
+  st_drive_loadingstationleft_loadingstationleftbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_loadingstationleft_loadingstationleftbackup
+      reversed: true
+
+  st_drive_right_rocketrightfront:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_right_rocketrightfront
+
+  st_drive_rightrocketfront_rightrocketfrontbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_rightrocketfront_rightrocketfrontbackup
+      reversed: true
+
+  st_drive_right_rocketrightback:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_right_rocketrightback
+      reversed: true
+
+  st_drive_rocketrightback_rocketrightbackbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_rocketrightback_rocketrightbackbackup
+      reversed: true
+
+  st_drive_rocketrightbackbackup_loadingstationright:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_rocketrightbackbackup_loadingstationright
+      reversed: false
+
+  st_drive_loadingstationright_loadingstationrightbackup:
+    behavior: bh_drive_pure_pursuit
+    behavior_config:
+      path_name: pt_loadingstationright_loadingstationrightbackup
+      reversed: true
+
+  # ------ Elevator ------
+
+  st_elevator_manual:
+    behavior: bh_elevator_manual
+    behavior_config:
+
+  st_elevator_zero:
+    behavior: bh_elevator_zero
+    behavior_config:
+
+  st_elevator_protect:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: protect
+      setpoint: 1.0
+
+  st_elevator_hatch_high:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: hatch_high
+      setpoint: 57.0
+
+  st_elevator_hatch_mid:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: hatch_mid
+      setpoint: 28.0
+
+  st_elevator_low:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: low
+      setpoint: 1.0
+
+  st_elevator_ball_high:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: ball_high
+      setpoint: 56.0
+
+  st_elevator_cargoship:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: cargoship
+      setpoint: 19.0
+
+  st_elevator_ball_mid:
+    behavior: bh_elevator_states
+    behavior_config:
+      position: ball_mid
+      setpoint: 27.0
+
+  # ------ Crossbow ------
+
+  st_crossbow_manual:
+    behavior: bh_crossbow_manual
+    behavior_config:
+
+  st_crossbow_zero:
+    behavior: bh_crossbow_zero
+    behavior_config:
+      position: zeroed
+
+  st_crossbow_extend:
+    behavior: bh_crossbow_states
+    behavior_config:
+      position: extended
+
+  st_crossbow_retract:
+    behavior: bh_crossbow_states
+    behavior_config:
+      position: retracted
+
+  st_crossbow_retract_and_release:
+    behavior: bh_crossbow_states
+    behavior_config:
+      position: retracted
+      wings_retracted: true
+
+  st_crossbow_release:
+    behavior: bh_crossbow_states
+    behavior_config:
+      position: extended
+      wings_retracted: true
+
+  # ----- Ball Collector -----
+
+  st_ball_collector_manual:
+    behavior: bh_ball_collector_manual
+    behavior_config:
+
+  st_ball_collector_zero:
+    behavior: bh_ball_collector_zero
+    behavior_config:
+      setpoint: 1.0
+
+  st_ball_collector_protect:
+    behavior: bh_ball_collector_states
+    behavior_config:
+      position: protect
+      setpoint: 1.0
+
+  st_ball_collector_stow:
+    behavior: bh_ball_collector_states
+    behavior_config:
+      position: stow
+      setpoint: 1.0
+
+  st_ball_collector_place_rocket:
+    behavior: bh_ball_collector_states
+    behavior_config:
+      position: place_rocket
+      setpoint: 40.0
+
+  st_ball_collector_place_cargoship:
+    behavior: bh_ball_collector_states
+    behavior_config:
+      position: place_cargoship
+      setpoint: 54.0
+
+  st_ball_collector_collect_floor:
+    behavior: bh_ball_collector_states
+    behavior_config:
+      position: collect_floor
+      setpoint: 83.0
+      percent_hold: 0.1
+
+  # ------ climber ------
+
+  st_climb_manual:
+    behavior: bh_climber_manual
+    behavior_config:
+
+  st_climb_zero:
+    behavior: bh_climber_zero
+    behavior_config:
+
+  st_climb_idle:
+    behavior: bh_climber_states
+    behavior_config:
+      position: idle
+
+  st_climb_manual_override:
+    behavior: bh_climber_states
+    behavior_config:
+      position: manual_override
+
+  st_climb_deploy:
+    behavior: bh_climber_states
+    behavior_config:
+      setpoint: 19.25
+      position: deploy
+
+  st_climb_lock_on:
+    behavior: bh_climber_states
+    behavior_config:
+      setpoint: 16.75
+      position: lock_on
+
+  st_climb_climb:
+    behavior: bh_climber_states
+    behavior_config:
+      setpoint: -4.2
+      position: climb
+
+done_for_time_state:
+  st_cb_release_wait:
+    state: st_crossbow_release
+    state_timeout: 500
+    max_timeout: 5000
+  st_ball_collector_stow_wait:
+    state: st_ball_collector_stow
+    state_timeout: 1000
+    max_timeout: 5000
+  st_ball_collector_collect_floor_wait:
+    state: st_ball_collector_collect_floor
+    state_timeout: 1000
+    max_timeout: 5000
+  st_ball_collector_place_rocket_wait:
+    state: st_ball_collector_place_rocket
+    state_timeout: 1000
+    max_timeout: 5000
+  st_ball_collector_place_cargoship_wait:
+    state: st_ball_collector_place_cargoship
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_low_wait:
+    state: st_elevator_low
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_ball_mid_wait:
+    state: st_elevator_ball_mid
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_ball_high_wait:
+    state: st_elevator_ball_high
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_cargoship_wait:
+    state: st_elevator_cargoship
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_hatch_mid_wait:
+    state: st_elevator_hatch_mid
+    state_timeout: 1000
+    max_timeout: 5000
+  st_elevator_hatch_high_wait:
+    state: st_elevator_hatch_high
+    state_timeout: 1000
+    max_timeout: 5000
+
+parallel_state:
+  pl_protect:
+    foreground_states: [st_ball_collector_protect, st_crossbow_retract, st_elevator_protect]
+    background_states: []
+  pl_protect_all:
+    foreground_states: [st_ball_collector_protect, st_crossbow_retract, st_elevator_protect, st_drive_percent, st_climb_idle]
+    background_states: []
+  pl_lldirect_extend_crossbow:
+    foreground_states: [st_drive_lldirect_auto, st_crossbow_extend]
+    background_states: []
+  pl_elevator_mid_extend_crossbow:
+    foreground_states: [st_elevator_hatch_mid, st_crossbow_extend]
+    background_states: []
+
+sequencer_state:
+  sq_hatch_collect:
+    sequence: [st_elevator_low, st_ball_collector_stow, st_crossbow_extend]
+  sq_ball_collect_floor:
+    sequence: [st_elevator_low, st_crossbow_retract, st_ball_collector_collect_floor]
+  sq_place_ball_low:
+    sequence: [st_elevator_low, st_ball_collector_place_rocket]
+  sq_place_ball_mid:
+    sequence: [st_elevator_ball_mid, st_ball_collector_place_rocket]
+  sq_place_ball_high:
+    sequence: [st_elevator_ball_high, st_ball_collector_place_rocket]
+  sq_place_ball_cargoship:
+    sequence: [st_elevator_cargoship, st_ball_collector_place_cargoship]
+  sq_place_hatch_low:
+    sequence: [st_elevator_low, st_crossbow_extend]
+  sq_place_hatch_mid:
+    sequence: [st_elevator_hatch_mid, st_crossbow_extend]
+  sq_place_hatch_high:
+    sequence: [st_elevator_hatch_high, st_crossbow_extend]
+  sq_climb_automated:
+    sequence: [st_climb_deploy, st_climb_lock_on, st_climb_climb]
+  sq_crossbow_check:
+    sequence: [pl_protect, st_crossbow_extend, st_cb_release_wait, st_crossbow_retract]
+  sq_ball_arm_check:
+    sequence: [pl_protect, st_ball_collector_collect_floor_wait, st_ball_collector_place_rocket_wait, st_ball_collector_stow_wait, st_ball_collector_place_cargoship_wait, st_ball_collector_protect]
+  sq_elevator_check:
+    sequence: [pl_protect, st_elevator_ball_mid_wait, st_elevator_cargoship_wait, st_elevator_ball_high_wait, st_elevator_low_wait, st_elevator_hatch_mid_wait, st_elevator_hatch_high_wait, st_elevator_protect]
+  sq_drivetrain_check:
+    sequence: [pl_protect, st_drive_auto_straight, st_drive_auto_spin_in_place]
+  sq_manipulators_check:
+    sequence: [sq_crossbow_check, sq_ball_arm_check]
+  sq_full_system_check:
+    sequence: [sq_manipulators_check, sq_elevator_check, sq_drivetrain_check]
+
+  # ------ Autos ------
+
+  sq_auto_left_rocketleft_frontlow:
+    sequence: [st_drive_left_rocketleftfront, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_leftrocketfront_leftrocketfrontbackup, st_crossbow_retract]
+  sq_auto_left_rocketleft_backlow:
+    sequence: [st_drive_left_rocketleftback, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_rocketleftback_rocketleftbackbackup, st_crossbow_retract]
+  sq_auto_left_rocketleft_doublelow:
+    sequence: [st_drive_left_rocketleftback, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_rocketleftback_rocketleftbackbackup, st_drive_rocketleftbackbackup_loadingstationleft, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract, st_drive_loadingstationleft_loadingstationleftbackup, pl_lldirect_extend_crossbow, st_drive_percent, st_cb_release_wait, st_crossbow_retract_and_release, st_crossbow_retract]
+  sq_auto_right_rocketright_frontlow:
+    sequence: [st_drive_right_rocketrightfront, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_rightrocketfront_rightrocketfrontbackup, st_crossbow_retract]
+  sq_auto_right_rocketright_backlow:
+    sequence: [st_drive_right_rocketrightback, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_rocketrightback_rocketrightbackbackup, st_crossbow_retract]
+  sq_auto_right_rocketright_doublelow:
+    sequence: [st_drive_right_rocketrightback, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract_and_release, st_drive_rocketrightback_rocketrightbackbackup, st_drive_rocketrightbackbackup_loadingstationright, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract, st_drive_loadingstationright_loadingstationrightbackup, pl_lldirect_extend_crossbow, st_drive_percent, st_cb_release_wait, st_crossbow_retract_and_release, st_crossbow_retract]
+  sq_auto_left_rocketleft_doublemid:
+    sequence: [st_drive_left_rocketleftback, pl_elevator_mid_extend_crossbow, st_drive_lldirect_auto, st_drive_percent, st_crossbow_retract_and_release, pl_protect, st_drive_rocketleftback_rocketleftbackbackup, st_drive_rocketleftbackbackup_loadingstationleft, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract, st_drive_loadingstationleft_loadingstationleftbackup, pl_elevator_mid_extend_crossbow, st_drive_lldirect_auto, st_drive_percent]
+  sq_auto_right_rocketright_doublemid:
+    sequence: [st_drive_right_rocketrightback, pl_elevator_mid_extend_crossbow, st_drive_lldirect_auto, st_drive_percent, st_crossbow_retract_and_release, pl_protect, st_drive_rocketrightback_rocketrightbackbackup, st_drive_rocketrightbackbackup_loadingstationright, pl_lldirect_extend_crossbow, st_drive_percent, st_crossbow_retract, st_drive_loadingstationright_loadingstationrightbackup, pl_elevator_mid_extend_crossbow, st_drive_lldirect_auto, st_drive_percent]
+
+
+
+variations:
+  practicebot:
+    single_state:
+      st_drive_lldirect:
+        behavior_config:
+          drive_speed_scale: 0.3
+      st_drive_lldirect_auto:
+        behavior_config:
+          drive_speed: 0.3
+          close_distance: 1.5
+      st_ball_collector_collect_floor:
+        behavior_config:
+          position: collect_floor
+          setpoint: 105.0
+          percent_hold: 0.1
+      st_ball_collector_zero:
+        behavior_config:
+          setpoint: 8.0
+      st_ball_collector_stow:
+        behavior_config:
+          setpoint: 8.0
+      st_ball_collector_protect:
+        behavior_config:
+          setpoint: 8.0
+      st_climb_deploy:
+        behavior_config:
+          setpoint: 19.15
+      st_elevator_protect:
+        behavior_config:
+          setpoint: 0.0
+      st_elevator_low:
+        behavior_config:
+          setpoint: 0.0

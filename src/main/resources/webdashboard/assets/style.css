@@ -1,0 +1,35 @@
+:root {
+    --background: #20201E;
+    --foreground: #2b33ff;
+    /*--foreground: #ff0a3c;*/
+    --grey: darkgrey;
+    --white: whitesmoke;
+    --red: orangered;
+    --green: lime;
+
+    /*Graph colors*/
+    --blue: blue;
+    --purple: mediumpurple;
+    --pink: deeppink;
+    --orange: orange;
+    --yellow: yellow;
+
+    /*graph color*/
+    --graph: orangered;
+}
+
+body, html {
+    position: fixed !important;
+    background: var(--background);
+    font-family: 'SansSerif', arial;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.unselectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

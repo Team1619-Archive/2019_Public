@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
+    <link rel="stylesheet" href="/pages/webdashboard/webdashboard.css">
+</head>
+<body>
+
+<div class="tab">
+    <button class="tablink unselectedtablink unselectable" id="valuesTab" onclick="openPage('values', this)">Values
+    </button>
+    <button class="tablink unselectedtablink unselectable" id="matchTab" onclick="openPage('match', this)">Match
+    </button>
+    <button class="tablink unselectedtablink unselectable" id="graphTab" onclick="openPage('graph', this)">Graph
+    </button>
+    <!--<button class="tablink unselectedtablink unselectable" id="logTab" onclick="openPage('log', this)">Log</button>-->
+    <button class="tablink unselectedtablink unselectable" id="pathTab" onclick="openPage('path', this)">Path</button>
+
+    <div class="connectedwrapper" id="connectedWrapper">
+        <div class="connected">
+            <div style="height: 5vh"></div>
+            <div class="connectedbar" style="height: 2vh; animation-duration: 500ms"></div>
+        </div>
+        <div class="connected">
+            <div style="height: 3.75vh"></div>
+            <div class="connectedbar" style="height: 3.25vh; animation-duration: 1000ms"></div>
+        </div>
+        <div class="connected">
+            <div style="height: 2.5vh"></div>
+            <div class="connectedbar" style="height: 4.5vh; animation-duration: 1500ms"></div>
+        </div>
+        <div class="connected">
+            <div style="height: 1.25vh"></div>
+            <div class="connectedbar" style="height: 5.75vh; animation-duration: 2000ms"></div>
+        </div>
+    </div>
+    <button class="standard unselectable" id="autoButton" onclick="chooseAuto()"
+            style="background: #20201E; color: var(--foreground); float: right; width: auto; margin-right: 0.5vw">No
+        Auto
+    </button>
+</div>
+
+<div id="autoPopup"
+     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+    <div class="form" style="height: auto; padding: 3%; left: 17%">
+        <div style="position: relative; top: 10%; height: 20%;">
+            <select id="autoOriginSelector" class="form" style="margin-bottom: 2%"></select>
+            <select id="autoDestinationSelector" class="form" style="margin-bottom: 2%"></select>
+            <select id="autoActionSelector" class="form" style="margin-bottom: 2%"></select>
+        </div>
+        <div style="position: relative; top: 50%; height: 20%;">
+            <button class="form" onclick="closeChooseAuto(false)" onmouseover=""
+                    style="width: 30%; background: var(--red)">Cancel
+            </button>
+            <button class="form" onclick="closeChooseAuto(true)" style="background: var(--green)">Select</button>
+        </div>
+    </div>
+</div>
+
+<iframe id="values" class="tabcontent" src="/pages/webdashboard/values/values.html"></iframe>
+
+<iframe id="match" class="tabcontent" src="/pages/webdashboard/match/match.html"></iframe>
+
+<iframe id="graph" class="tabcontent" src="/pages/webdashboard/graph/graph.html"></iframe>
+
+<iframe id="log" class="tabcontent" src="/pages/webdashboard/log/log.html"></iframe>
+
+<iframe id="path" class="tabcontent" src="/pages/webdashboard/path/path.html"></iframe>
+
+<script src="/pages/webdashboard/assets/urlformdata.js"></script>
+<script src="/pages/webdashboard/webdashboard.js"></script>
+</body>
+</html>

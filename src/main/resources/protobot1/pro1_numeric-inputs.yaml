@@ -1,0 +1,20 @@
+controller_axis:
+  ni_driver_left_y:
+    port: 0
+    axis: 1
+    deadband: 0.15
+    inverted: true
+
+  ni_driver_left_x:
+    port: 0
+    axis: 2
+
+  ni_driver_right_y:
+    port: 0
+    axis: 5
+
+  ni_driver_right_x:
+    port: 0
+    axis: 4
+    deadband: 0.15
+    scale: 0.75

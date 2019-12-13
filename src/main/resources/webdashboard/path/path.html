@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Path</title>
+
+    <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
+    <link rel="stylesheet" href="/pages/webdashboard/path/path.css">
+</head>
+<body ondblclick="openMenu()">
+
+<div class="chartWrapper" id="chartWrapper">
+    <canvas id="chart"></canvas>
+</div>
+
+<table id="pointTable">
+    <thead>
+    <tr class="unselectable">
+        <th>X</th>
+        <th>Y</th>
+    </tr>
+    </thead>
+    <tbody id="pointTableBody">
+
+    </tbody>
+</table>
+
+<div class="unselectable" id="menuPopup"
+     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+    <div class="form">
+        <button class="form" onclick="copyToClipboard()"
+                style="background: var(--orange);">Copy
+            Path
+        </button>
+        <button class="form" onclick="openPaste()"
+                style="background: var(--orange);">Paste
+            Path
+        </button>
+        <button class="form" onclick="clearPath()" style="background: var(--red)">Clear</button>
+        <button class="form" onclick="closeMenu()" style="background: var(--green)">Close</button>
+    </div>
+</div>
+
+<div class="unselectable" id="pastePopup"
+     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+    <div class="form" style="top: 20%">
+        <h1>Path</h1>
+        <input id="pathInput" class="form">
+        <div>
+            <button class="form" onclick="closePaste(false)" style="background: var(--red); width: 30%">Close</button>
+            <button class="form" onclick="closePaste(true)" style="background: var(--green); width: 30%">Paste</button>
+        </div>
+    </div>
+</div>
+
+<script src="/pages/webdashboard/assets/urlformdata.js"></script>
+<script src="/pages/webdashboard/assets/mathextras.js"></script>
+<script src="/pages/webdashboard/assets/chart.js"></script>
+<script src="/pages/webdashboard/assets/jquery.js"></script>
+<script src="/pages/webdashboard/path/path.js"></script>
+</body>
+</html>

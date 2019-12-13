@@ -1,0 +1,4 @@
+controller_button:
+  bi_driver_left_trigger:
+    port: 0
+    button: left_trigger

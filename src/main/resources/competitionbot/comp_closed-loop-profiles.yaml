@@ -1,0 +1,70 @@
+motors:
+  ball_collector:
+    profiles:
+      up:
+        f: 0.0
+        p: 0.0075
+        i: 0.0
+        d: 0.0
+        force_compensation: 0.03
+        max_output: 0.5
+      down:
+        f: 0.0
+        p: 0.015
+        i: 0.0
+        d: 0.0015
+        force_compensation: 0.03
+        max_output: 0.75
+      idle:
+        f: 0.0
+        p: 0.015
+        i: 0.0
+        d: 0.003
+        max_output: 0.5
+  elevator:
+    profiles:
+      up:
+        f: 0.0
+        p: 0.0
+        i: 0.0
+        d: 0.0
+        max_output: 1.0
+        kv: 0.008
+        ka: 0.0013
+      down:
+        f: 0.0
+        p: 0.005
+        i: 0.0
+        d: 0.0
+        max_output: 1.0
+        kv: 0.0063
+        ka: 0.0013
+      position:
+        f: 0.0
+        p: 0.035
+        i: 0.0
+        d: 0.0
+        max_output: 1.0
+        idle_output: 0.0
+other:
+  ll_direct:
+    profiles:
+      test:
+        f: 0.0
+        p: 0.95
+        i: 0.0
+        d: 0.02
+        max_output: 0.75
+        # New Wheels on P-Bot p: 1.1 i:0.0 d: 0.01
+        # Worn down a bit on p-Bot P: 0.775 d:02
+        # Worn down to very little tread on p-Bot P: 0.67 d:02
+
+  drive:
+    profiles:
+      drive_straight:
+        f: 0.0
+        p: 0.02
+        i: 0.0
+        d: 0.0
+        max_output: 1.0
+

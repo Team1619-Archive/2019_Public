@@ -1,0 +1,178 @@
+paths:
+  pt_left_rocketleftfront:
+    path: [[0, 0], [60, 0], [70, 20], [80, 45], [90, 53]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 0.5
+    look_ahead_distance: 30.0
+
+  pt_leftrocketfront_leftrocketfrontbackup:
+    path: [[145, 90], [108, 64]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+  pt_left_rocketleftback:
+    path: [[0, 0], [-67, 0], [-136, -32], [-210, -85], [-215, -77]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.005
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 30.0
+
+  pt_rocketleftback_rocketleftbackbackup:
+    path: [[-200, -82], [-210, -79], [-212, -84]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.5
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+  pt_rocketleftbackbackup_loadingstationleft:
+    path: [[-212, -82], [-192, -60], [-130, -60], [0, -86]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.5
+    max_speed: 1.0
+    look_ahead_distance: 50.0
+
+  pt_loadingstationleft_loadingstationleftbackup:
+    path: [[50, -89], [-78, -87], [-69, -80]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+  pt_right_rocketrightfront:
+    path: [[0, 0], [60, 0], [70, -20], [80, -45], [90, -53]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 0.5
+    look_ahead_distance: 30.0
+
+  pt_rightrocketfront_rightrocketfrontbackup:
+    path: [[145, -90], [108, -64]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+  pt_right_rocketrightback:
+    path: [[0, 0], [-67, 0], [-136, 32], [-210, 85], [-215, 77]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.005
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 30.0
+
+  pt_rocketrightback_rocketrightbackbackup:
+    path: [[-200, 82], [-210, 79], [-212, 84]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.5
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+  pt_rocketrightbackbackup_loadingstationright:
+    path: [[-212, 82], [-192, 60], [-130, 60], [0, 86]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.5
+    max_speed: 1.0
+    look_ahead_distance: 50.0
+
+  pt_loadingstationright_loadingstationrightbackup:
+    path: [[50, 89], [-78, 87], [-69, 80]]
+    spacing: 2.0
+    smoothing: 0.9
+    max_acceleration: 0.01
+    tracking_error_speed: 5.0
+    min_speed: 0.3
+    max_speed: 1.0
+    look_ahead_distance: 25.0
+
+variations:
+  practicebot:
+    paths:
+      pt_left_rocketleftfront:
+        max_acceleration: 0.005
+        turn_speed: 0.005
+      pt_left_rocketleftback:
+        path: [[0, 0], [-67, 0], [-136, -32], [-213, -85], [-228, -79]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 40.0
+        velocity_look_ahead_points: 30
+      pt_rocketleftback_rocketleftbackbackup:
+        path: [[-205, -82], [-210, -79], [-220, -90]]
+        max_acceleration: 0.01
+        turn_speed: 0.05
+        look_ahead_distance: 30.0
+        velocity_look_ahead_points: 30
+      pt_rocketleftbackbackup_loadingstationleft:
+        path: [[-212, -82], [-192, -60], [-130, -60], [0, -84]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 80.0
+        velocity_look_ahead_points: 30
+      pt_loadingstationleft_loadingstationleftbackup:
+        path: [[50, -89], [-68, -87], [-60, -80]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 30.0
+        velocity_look_ahead_points: 30
+      pt_right_rocketrightfront:
+        max_acceleration: 0.005
+        turn_speed: 0.005
+      pt_right_rocketrightback:
+        path: [[0, 0], [-67, 0], [-136, 32], [-213, 85], [-228, 79]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 40.0
+        velocity_look_ahead_points: 30
+      pt_rocketrightback_rocketrightbackbackup:
+        path: [[-205, 82], [-210, 79], [-220, 90]]
+        max_acceleration: 0.01
+        turn_speed: 0.05
+        look_ahead_distance: 30.0
+        velocity_look_ahead_points: 30
+      pt_rocketrightbackbackup_loadingstationright:
+        path: [[-212, 82], [-192, 60], [-130, 60], [0, 84]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 80.0
+        velocity_look_ahead_points: 30
+      pt_loadingstationright_loadingstationrightbackup:
+        path: [[50, 89], [-68, 87], [-60, 80]]
+        max_acceleration: 0.01
+        turn_speed: 0.01
+        look_ahead_distance: 30.0
+        velocity_look_ahead_points: 30

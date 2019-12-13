@@ -1,0 +1,9 @@
+.text {
+    background: var(--background);
+    border-color: var(--background);
+    color: var(--white);
+    font-size: 3vmin;
+    width: 99.5%;
+    height: 100%;
+    word-break: break-all;
+}

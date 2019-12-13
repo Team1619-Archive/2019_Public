@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Values</title>
+        <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
+        <link rel="stylesheet" href="/pages/webdashboard/values/values.css">
+    </head>
+    <body ondblclick="openMenu()">
+        <table id="valueTable">
+            <thead>
+                <tr style="width: 100%">
+                    <th id="nameHeader" class="unselectable">Name</th>
+                    <th class="unselectable">Value</th>
+                </tr>
+            </thead>
+            <tbody id="valueTableBody" p></tbody>
+        </table>
+
+        <div id="dragContainer" style="flex-grow: 100"></div>
+
+        <div id="valuePopup"
+             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+            <div class="form" style="top: 20%; padding: 0% 0% 3% 0%">
+                <h1 class="form" id="valueDisplay"></h1>
+                <div style="text-align: center; position: relative; top: 10%; height: 20%;">
+                    <select id="vectorInputSelector" class="form"
+                            style="position: relative; display: none; left: 20%; width: 60%; height: 8vh; margin-bottom: 2vh"></select>
+                    <input id="valueInput" class="form" onkeyup="onValueChange()"
+                           style="left: 20%; margin-bottom: 2%; height: 8vh">
+                </div>
+                <div class="unselectable" style="position: relative; top: 20%; height: 20%;">
+                    <button class="form"
+                            onclick="createDraggableViewer(document.getElementById('valueDisplay').innerText); closeUpdateValue(false)"
+                            style="background: var(--orange); width: auto; height: 80%;">Popout
+                    </button>
+                    <button class="form" onclick="toggleGraph(); closeUpdateValue(false)"
+                            style="background: var(--orange); width: auto; height: 80%;">Toggle Graph
+                    </button>
+                    <button class="form" onclick="closeUpdateValue(false)"
+                            style="width: auto; height: 80%; background: var(--red)">Cancel
+                    </button>
+                    <button class="form" id="updateButton" onclick="closeUpdateValue(true)"
+                            style="background: var(--green); width: auto; height: 80%;">Update
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="vectorGraphingPopup"
+             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+            <div class="form" style="top: 20%; padding: 0% 0% 3% 0%">
+                <h1 class="form" id="vectorDisplay"></h1>
+                <h2 class="form">X</h2>
+                <select id="vectorGraphingX" class="form"></select>
+                <h2 class="form">Y</h2>
+                <select id="vectorGraphingY" class="form"></select>
+                <div class="unselectable" style="position: relative; top: 20%; height: 20%;">
+                    <button class="form" onclick="closeVectorGraphingMenu(false)"
+                            style="width: auto; height: 80%; background: var(--red)">Cancel
+                    </button>
+                    <button class="form" onclick="closeVectorGraphingMenu(true)"
+                            style="width: auto; height: 80%; background: var(--green)">Graph
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="unselectable" id="menuPopup"
+             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+            <div class="form" style="top: 10vh">
+                <h2 class="form">FMS Mode</h2>
+                <select id="fmsSelector" class="form" style="margin-bottom: 2%">
+                    <option value="disabled">Disabled</option>
+                    <option value="auto">Auto</option>
+                    <option value="teleop">Teleop</option>
+                    <option value="test">Test</option>
+                </select>
+                <h2 class="form">Driver</h2>
+                <select id="driverSelector" class="form" style="margin-bottom: 2%"></select>
+                <h2 class="form">Operator</h2>
+                <select id="operatorSelector" class="form" style="margin-bottom: 2%"></select>
+                <br>
+                <button class="form" onclick="closeMenu()" style="background: var(--green)">Close</button>
+            </div>
+        </div>
+
+        <script src="/pages/webdashboard/assets/urlformdata.js"></script>
+        <script src="/pages/webdashboard/values/values.js"></script>
+    </body>
+</html>

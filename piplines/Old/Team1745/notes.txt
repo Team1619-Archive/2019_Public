@@ -1,0 +1,15 @@
+https://www.chiefdelphi.com/t/limelight-calibration-question/351515
+
+These are the settings that have made us successful:
+Thresholding:
+
+Hue range as small as possible so you can find the retro reflective green
+Getting rid of the lower end for saturation
+Value range at the upper end
+Ensure Erosion Steps and Dilation Steps are at 1 respectively. Our understanding is that these both get rid of noise
+Contour Filtering:
+
+Target Grouping - Dual target. Since there are two pieces of tape
+Intersection Filter - Vert - Above. If the edges of the tape were extended infinitely they would intersect vertically and at the top (rather than vertically at the bottom)
+You can find our pipeline settings in our github. It got us through two competitions.
+

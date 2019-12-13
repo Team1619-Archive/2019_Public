@@ -1,0 +1,67 @@
+talon:
+  mo_left_drive_primary:
+    device_number: 15
+    inverted: true
+    feedback_device: quad_encoder
+    sensor_inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 50
+    peak_current_duration_milliseconds: 100
+    counts_per_unit: 209.0
+    #Example max_counts_per_100ms: 500 * 1440 / 600.0 = 1200
+    #Where 500 is max rpm, 1440 is count per revolution, and 600 is the number of 100ms is 1 minute aka 1 minute / 100ms
+    max_counts_per_100ms: 1200.0
+    profiles:
+      pr_teleop:
+        f: 0.5
+        p: 0.25
+        i: 0.0
+        d: 20.0
+      pr_pure_pursuit:
+        f: 0.5
+        p: 2.0
+        i: 0.0
+        d: 40.0
+
+  mo_right_drive_primary:
+    device_number: 0
+    inverted: false
+    feedback_device: quad_encoder
+    sensor_inverted: true
+    current_limit_enabled: true
+    continuous_current_limit_amps: 30
+    peak_current_limit_amps: 50
+    peak_current_duration_milliseconds: 100
+    counts_per_unit: 209.0
+    max_counts_per_100ms: 1200.0
+    profiles:
+      pr_teleop:
+        f: 0.5
+        p: 0.25
+        i: 0.0
+        d: 20.0
+      pr_pure_pursuit:
+        f: 0.5
+        p: 2.0
+        i: 0.0
+        d: 40.0
+
+victor:
+  mo_left_drive_follower_1:
+    device_number: 14
+    inverted: true
+
+  mo_right_drive_follower_1:
+    device_number: 1
+    inverted: false
+
+motor_group:
+
+  mo_drive_left:
+    master: mo_left_drive_primary
+    followers: [mo_left_drive_follower_1]
+
+  mo_drive_right:
+    master: mo_right_drive_primary
+    followers: [mo_right_drive_follower_1]
