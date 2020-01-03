@@ -1,16 +1,53 @@
+<!--html to configure the log page of the webdashboard,
+which has a console with messages from the logger in the robot code-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <!--Page title for web browser-->
     <title>Log</title>
 
+    <!--All css stylesheets used in the page-->
     <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
     <link rel="stylesheet" href="/pages/webdashboard/log/log.css">
-</head>
-<body>
-<textarea readonly class="text" id="textArea"></textarea>
 
+</head>
+
+<body>
+
+<!--Main textArea to display the log messages-->
+<div id="textArea"></div>
+
+<!--Footer bar below the log display, to control the logger functionality, horizontal layout-->
+<div id="footer" class="unselectable">
+
+    <!--Clears all log messages-->
+    <button id="clearButton" onclick="clearLog()">Clear</button>
+
+    <!--Saves all log messages to file on the computers files system-->
+    <button id="saveButton" onclick="save()">Save</button>
+
+    <!--Checkbox to control the log display autoscroll-->
+    <input id="autoscrollCheckbox" type="checkbox" onclick="checkboxUpdate()" checked>
+    <span id="autoscrollLabel">Autoscroll</span>
+
+    <!--Text field to take input for the searching messages-->
+    <input id="searchField" type="text" autocomplete="off" onkeyup="searchUpdate()">
+
+    <!--Checkbox to control whether the search must match case-->
+    <input id="matchCaseCheckbox" type="checkbox" onclick="checkboxUpdate()" checked>
+    <span id="matchCaseLabel">Match Case</span>
+
+    <!--Checkbox to control whether the display should only display messages matching the search-->
+    <input id="showMatchingCheckbox" type="checkbox" onclick="checkboxUpdate()">
+    <span id="showMatchingLabel">Show Matching</span>
+</div>
+
+<!--All js scripts used in the page-->
 <script src="/pages/webdashboard/assets/urlformdata.js"></script>
 <script src="/pages/webdashboard/log/log.js"></script>
+
 </body>
 </html>

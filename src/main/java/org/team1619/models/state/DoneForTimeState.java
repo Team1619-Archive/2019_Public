@@ -1,15 +1,14 @@
 package org.team1619.models.state;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.robot.ModelFactory;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.Timer;
 import org.team1619.utilities.YamlConfigParser;
-
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A shell that runs a state until it is done plus a certain amount of time has passed or it times out
@@ -84,7 +83,7 @@ public class DoneForTimeState implements State {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return fSubState.getSubsystems();
 	}
 

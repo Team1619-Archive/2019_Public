@@ -1,14 +1,13 @@
 package org.team1619.models.state;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.robot.ModelFactory;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.YamlConfigParser;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * A shell that handles running a sequence of states
@@ -92,7 +91,7 @@ public class SequencerState implements State {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		// Returns a list of all the subsystems required by all the states that will be run sometime during the sequence
 		List<String> subsystems = new ArrayList<>();
 		for (State state : fStates) {
@@ -102,7 +101,7 @@ public class SequencerState implements State {
 				}
 			}
 		}
-		return ImmutableSet.copyOf(subsystems);
+		return Set.copyOf(subsystems);
 	}
 
 	@Override

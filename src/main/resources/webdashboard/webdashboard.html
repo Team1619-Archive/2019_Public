@@ -1,76 +1,144 @@
+<!--html to configure the main page of the webdashboard,
+which contains the sub-pages-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <!--Lock the page view to prevent full page scrolling-->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!--Page title for web browser-->
     <title>Dashboard</title>
+
+    <!--All css stylesheets used in the page-->
     <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
     <link rel="stylesheet" href="/pages/webdashboard/webdashboard.css">
+
 </head>
+
 <body>
 
+<!--Header at the top of webdashboard-->
 <div class="tab">
+
+    <!--Tab to open the values page-->
     <button class="tablink unselectedtablink unselectable" id="valuesTab" onclick="openPage('values', this)">Values
     </button>
+
+    <!--Tab to open the match page-->
     <button class="tablink unselectedtablink unselectable" id="matchTab" onclick="openPage('match', this)">Match
     </button>
+
+    <!--Tab to open the log page-->
+    <button class="tablink unselectedtablink unselectable" id="logTab" onclick="openPage('log', this)">Log</button>
+
+    <!--Tab to open the graph page-->
     <button class="tablink unselectedtablink unselectable" id="graphTab" onclick="openPage('graph', this)">Graph
     </button>
-    <!--<button class="tablink unselectedtablink unselectable" id="logTab" onclick="openPage('log', this)">Log</button>-->
+
+    <!--Tab to open the path page-->
     <button class="tablink unselectedtablink unselectable" id="pathTab" onclick="openPage('path', this)">Path</button>
 
-    <div class="connectedwrapper" id="connectedWrapper">
-        <div class="connected">
-            <div style="height: 5vh"></div>
-            <div class="connectedbar" style="height: 2vh; animation-duration: 500ms"></div>
+    <!--Wrapper for the bars in the connection status indicator-->
+    <div class="connectionwrapper" id="connectedWrapper">
+
+        <!--Wrapper for the first connection bar and its spacer-->
+        <div class="connection">
+
+            <!--The first connection bar spacer-->
+            <div id="connectionBarSpacer1"></div>
+
+            <!--The first connection bar-->
+            <div id="connectionBar1" class="connectionbar"></div>
         </div>
-        <div class="connected">
-            <div style="height: 3.75vh"></div>
-            <div class="connectedbar" style="height: 3.25vh; animation-duration: 1000ms"></div>
+
+        <!--Wrapper for the second connection bar and its spacer-->
+        <div class="connection">
+
+            <!--The second connection bar spacer-->
+            <div id="connectionBarSpacer2"></div>
+
+            <!--The second connection bar-->
+            <div id="connectionBar2" class="connectionbar"></div>
         </div>
-        <div class="connected">
-            <div style="height: 2.5vh"></div>
-            <div class="connectedbar" style="height: 4.5vh; animation-duration: 1500ms"></div>
+
+        <!--Wrapper for the third connection bar and its spacer-->
+        <div class="connection">
+
+            <!--The third connection bar spacer-->
+            <div id="connectionBarSpacer3"></div>
+
+            <!--The third connection bar-->
+            <div id="connectionBar3" class="connectionbar"></div>
         </div>
-        <div class="connected">
-            <div style="height: 1.25vh"></div>
-            <div class="connectedbar" style="height: 5.75vh; animation-duration: 2000ms"></div>
+
+        <!--Wrapper for the fourth connection bar and its spacer-->
+        <div class="connection">
+
+            <!--The fourth connection bar spacer-->
+            <div id="connectionBarSpacer4"></div>
+
+            <!--The fourth connection bar-->
+            <div id="connectionBar4" class="connectionbar"></div>
         </div>
     </div>
-    <button class="standard unselectable" id="autoButton" onclick="chooseAuto()"
-            style="background: #20201E; color: var(--foreground); float: right; width: auto; margin-right: 0.5vw">No
-        Auto
-    </button>
+
+    <!--Button to open the auto selector, shows the currently selected auto-->
+    <button class="standard unselectable" id="autoButton" onclick="chooseAuto()">No Auto</button>
 </div>
 
-<div id="autoPopup"
-     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
-    <div class="form" style="height: auto; padding: 3%; left: 17%">
-        <div style="position: relative; top: 10%; height: 20%;">
-            <select id="autoOriginSelector" class="form" style="margin-bottom: 2%"></select>
-            <select id="autoDestinationSelector" class="form" style="margin-bottom: 2%"></select>
-            <select id="autoActionSelector" class="form" style="margin-bottom: 2%"></select>
+<!--Auto chooser menu open by the auto button-->
+<!--Opened on a double click anywhere on the page body-->
+<div id="autoPopup">
+
+    <!--Wrapper that contains all interactive elements in the form-->
+    <div id="autoForm" class="form">
+
+        <!--Wrapper that contains the three selectors in the form in a vertical layout-->
+        <div id="autoSelectorWrapper">
+
+            <!--Selects the auto origin-->
+            <select id="autoOriginSelector" class="form autoForm"></select>
+
+            <!--Selects the auto destination-->
+            <select id="autoDestinationSelector" class="form autoForm"></select>
+
+            <!--Selects the auto action-->
+            <select id="autoActionSelector" class="form autoForm"></select>
         </div>
-        <div style="position: relative; top: 50%; height: 20%;">
-            <button class="form" onclick="closeChooseAuto(false)" onmouseover=""
-                    style="width: 30%; background: var(--red)">Cancel
-            </button>
-            <button class="form" onclick="closeChooseAuto(true)" style="background: var(--green)">Select</button>
+
+        <!--Wrapper that contains the cancel and select in the form in a horizontal layout-->
+        <div id="autoButtonWrapper">
+
+            <!--Closes the auto chooser without sending auto data to the robot code-->
+            <button id="autoCancelButton" class="form" onclick="closeChooseAuto(false)">Cancel</button>
+
+            <!--Closes the auto chooser and sends auto data to the robot code-->
+            <button id="autoSelectButton" class="form" onclick="closeChooseAuto(true)">Select</button>
         </div>
     </div>
 </div>
 
+<!--Frame containing the values page content-->
 <iframe id="values" class="tabcontent" src="/pages/webdashboard/values/values.html"></iframe>
 
+<!--Frame containing the match page content-->
 <iframe id="match" class="tabcontent" src="/pages/webdashboard/match/match.html"></iframe>
 
-<iframe id="graph" class="tabcontent" src="/pages/webdashboard/graph/graph.html"></iframe>
-
+<!--Frame containing the log page content-->
 <iframe id="log" class="tabcontent" src="/pages/webdashboard/log/log.html"></iframe>
 
+<!--Frame containing the graph page content-->
+<iframe id="graph" class="tabcontent" src="/pages/webdashboard/graph/graph.html"></iframe>
+
+<!--Frame containing the path page content-->
 <iframe id="path" class="tabcontent" src="/pages/webdashboard/path/path.html"></iframe>
 
+<!--All js scripts used in the page-->
 <script src="/pages/webdashboard/assets/urlformdata.js"></script>
 <script src="/pages/webdashboard/webdashboard.js"></script>
+
 </body>
 </html>

@@ -161,10 +161,6 @@ talon:
     device_number: 5
     inverted: false
 
-victor:
-  victor_test:
-    device_number: 7
-
 motor_group:
 
   mo_vacuum_pump:

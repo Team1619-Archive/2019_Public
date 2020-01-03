@@ -1,6 +1,5 @@
 package org.team1619.services.states;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
 import org.team1619.utilities.injection.Inject;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
@@ -11,14 +10,14 @@ import org.team1619.shared.abstractions.InputValues;
 import org.team1619.shared.abstractions.ObjectsDirectory;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.YamlConfigParser;
-
-import java.util.concurrent.TimeUnit;
+import org.team1619.utilities.services.ScheduledService;
+import org.team1619.utilities.services.Scheduler;
 
 /**
  * Reads the FMS mode sent to us by the field and runs the correct StateControls and StateMachine
  */
 
-public class StatesService extends AbstractScheduledService {
+public class StatesService extends ScheduledService {
 
 	private static final Logger sLogger = LogManager.getLogger(StatesService.class);
 	private final ObjectsDirectory fSharedObjectsDirectory;
@@ -27,7 +26,8 @@ public class StatesService extends AbstractScheduledService {
 	private final YamlConfigParser fParser;
 	private final RobotConfiguration fRobotConfiguration;
 	private double fPreviousTime;
-	private long MIN_FRAME_TIME;
+	private long FRAME_TIME_THRESHOLD;
+	private long FRAME_CYCLE_TIME_THRESHOLD;
 
 	private FMS.Mode fCurrentFmsMode;
 	private String fRobotName = "competitionbot";
@@ -59,7 +59,8 @@ public class StatesService extends AbstractScheduledService {
 		fParser.loadWithFolderName("states.yaml");
 		fSharedObjectsDirectory.registerAllStates(fParser);
 
-		MIN_FRAME_TIME = fRobotConfiguration.getInt("global_timing", "state_service_max_frame_time");
+		FRAME_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_time_threshold_state_service");
+		FRAME_CYCLE_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_cycle_time_threshold_state_service");
 		fPreviousTime = -1;
 		fSharedInputValues.setBoolean("bi_has_been_zeroed", false);
 
@@ -80,7 +81,7 @@ public class StatesService extends AbstractScheduledService {
 	 */
 	@Override
 	protected Scheduler scheduler() {
-		return Scheduler.newFixedRateSchedule(0, 1000 / 60, TimeUnit.MILLISECONDS);
+		return new Scheduler(1000 / 60);
 	}
 
 	/**
@@ -89,7 +90,9 @@ public class StatesService extends AbstractScheduledService {
 	 * Updates the instance of StateControls and the StateMachine
 	 */
 	@Override
-	protected void runOneIteration() {
+	protected void runOneIteration() throws Exception {
+
+		double frameStartTime = System.currentTimeMillis();
 
 		//Get the FMS mode from the field or webDashboard
 		FMS.Mode nextFmsMode = fFms.getMode();
@@ -139,13 +142,23 @@ public class StatesService extends AbstractScheduledService {
 		}
 
 		// Check for delayed frames
-		fPreviousTime = (fPreviousTime < 0) ? System.currentTimeMillis() : fPreviousTime;
 		double currentTime = System.currentTimeMillis();
-		double diffTime = currentTime - fPreviousTime;
-		fSharedInputValues.setNumeric("ni_state_service_frame_time", diffTime);
-		if (diffTime > MIN_FRAME_TIME) {
-			sLogger.info("********** State Service frame time = {}", diffTime);
+		double frameTime = currentTime - frameStartTime;
+		double totalCycleTime = currentTime - fPreviousTime;
+		fSharedInputValues.setNumeric("ni_frame_time_states_service", frameTime);
+		fSharedInputValues.setNumeric("ni_frame_cycle_time_states_service", totalCycleTime);
+		if (frameTime > FRAME_TIME_THRESHOLD) {
+			sLogger.info("********** States Service frame time = {}", frameTime);
+		}
+		if (totalCycleTime > FRAME_CYCLE_TIME_THRESHOLD) {
+			sLogger.info("********** States Service frame cycle time = {}", totalCycleTime);
 		}
 		fPreviousTime = currentTime;
+
+	}
+
+	@Override
+	protected void shutDown() throws Exception {
+
 	}
 }

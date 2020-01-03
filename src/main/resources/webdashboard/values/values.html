@@ -1,91 +1,167 @@
+<!--html to configure the values page of the webdashboard,
+which has a table for viewing values in the robot code's input and output service,
+an area for the user to put values they want to see,
+allows the user to change values in sim mode,
+and handles gamepad input in sim mode-->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+
+        <!--Page title for web browser-->
         <title>Values</title>
+
+        <!--All css stylesheets used in the page-->
         <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
         <link rel="stylesheet" href="/pages/webdashboard/values/values.css">
+
     </head>
+
     <body ondblclick="openMenu()">
+
+        <!--Values table which displays robot code values-->
         <table id="valueTable">
+
+            <!--The header of the values table, which contains the header row-->
             <thead>
-                <tr style="width: 100%">
+
+                <!--The header row, which contains the head cells-->
+                <tr id="valueTableHeader">
+
+                    <!--Name display head cell-->
                     <th id="nameHeader" class="unselectable">Name</th>
+
+                    <!--Value display head cell-->
                     <th class="unselectable">Value</th>
                 </tr>
             </thead>
-            <tbody id="valueTableBody" p></tbody>
+
+            <!--Display table body in which robot code values will be put-->
+            <tbody id="valueTableBody"></tbody>
         </table>
 
-        <div id="dragContainer" style="flex-grow: 100"></div>
+        <!--Container popout values-->
+        <div id="dragContainer"></div>
 
-        <div id="valuePopup"
-             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
-            <div class="form" style="top: 20%; padding: 0% 0% 3% 0%">
+        <!--Menu popup for value manipulating and extra viewing options-->
+        <div id="valuePopup">
+
+            <!--Interaction form with buttons and inputs-->
+            <div id="valueForm" class="form">
+
+                <!--Header to display the name of the value being interacted with-->
                 <h1 class="form" id="valueDisplay"></h1>
-                <div style="text-align: center; position: relative; top: 10%; height: 20%;">
-                    <select id="vectorInputSelector" class="form"
-                            style="position: relative; display: none; left: 20%; width: 60%; height: 8vh; margin-bottom: 2vh"></select>
-                    <input id="valueInput" class="form" onkeyup="onValueChange()"
-                           style="left: 20%; margin-bottom: 2%; height: 8vh">
+
+                <!--Wrapper to layout the inputs and selectors vertically-->
+                <div id="valueInputWrapper">
+
+                    <!--Selector to pick what part of a vector to edit-->
+                    <select id="vectorInputSelector" class="form"></select>
+
+                    <!--Input for new value-->
+                    <input id="valueInput" class="form" onkeyup="onValueChange()">
                 </div>
-                <div class="unselectable" style="position: relative; top: 20%; height: 20%;">
-                    <button class="form"
-                            onclick="createDraggableViewer(document.getElementById('valueDisplay').innerText); closeUpdateValue(false)"
-                            style="background: var(--orange); width: auto; height: 80%;">Popout
-                    </button>
-                    <button class="form" onclick="toggleGraph(); closeUpdateValue(false)"
-                            style="background: var(--orange); width: auto; height: 80%;">Toggle Graph
-                    </button>
-                    <button class="form" onclick="closeUpdateValue(false)"
-                            style="width: auto; height: 80%; background: var(--red)">Cancel
-                    </button>
-                    <button class="form" id="updateButton" onclick="closeUpdateValue(true)"
-                            style="background: var(--green); width: auto; height: 80%;">Update
-                    </button>
+
+                <!--Wrapper to layout the buttons horizontally-->
+                <div id="valueButtonWrapper" class="unselectable">
+
+                    <!--Button to create a new draggable viewer-->
+                    <button id="viewerButton" class="form" onclick="onCreateDraggableViewer()">Popout</button>
+
+                    <!--Button toggle whether the value is displayed on the graph-->
+                    <button id="toggleGraphButton" class="form" onclick="onToggleGraph()">Toggle Graph</button>
+
+                    <!--Button to close the popup-->
+                    <button id="closeButton" class="form" onclick="closeUpdateValue(false)">Cancel</button>
+
+                    <!--Button to close the popup and update the value in the robot code-->
+                    <button id="updateButton" class="form" onclick="closeUpdateValue(true)">Update</button>
                 </div>
             </div>
         </div>
 
-        <div id="vectorGraphingPopup"
-             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
-            <div class="form" style="top: 20%; padding: 0% 0% 3% 0%">
+        <!--Menu popup for selecting the data streams to graph a vector-->
+        <div id="vectorGraphingPopup">
+
+            <!--Interaction form with buttons and inputs-->
+            <div id="vectorForm" class="form">
+
+                <!--Header to display the name of the vector being graphed-->
                 <h1 class="form" id="vectorDisplay"></h1>
+
+                <!--Header to display "X" for the X data stream-->
                 <h2 class="form">X</h2>
+
+                <!--Selector for the value from the vector that will be used for the X data stream-->
                 <select id="vectorGraphingX" class="form"></select>
+
+                <!--Header to display "Y" for the Y data stream-->
                 <h2 class="form">Y</h2>
+
+                <!--Selector for the value from the vector that will be used for the Y data stream-->
                 <select id="vectorGraphingY" class="form"></select>
-                <div class="unselectable" style="position: relative; top: 20%; height: 20%;">
-                    <button class="form" onclick="closeVectorGraphingMenu(false)"
-                            style="width: auto; height: 80%; background: var(--red)">Cancel
-                    </button>
-                    <button class="form" onclick="closeVectorGraphingMenu(true)"
-                            style="width: auto; height: 80%; background: var(--green)">Graph
-                    </button>
+
+                <!--Wrapper to layout the buttons horizontally-->
+                <div id="vectorButtonWrapper" class="unselectable">
+
+                    <!--Button to close the popup-->
+                    <button id="vectorCloseButton" class="form" onclick="closeVectorGraphingMenu(false)">Cancel</button>
+
+                    <!--Button to close the popup and graph the vector-->
+                    <button id="vectorGraphButton" class="form" onclick="closeVectorGraphingMenu(true)">Graph</button>
                 </div>
             </div>
         </div>
 
-        <div class="unselectable" id="menuPopup"
-             style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
-            <div class="form" style="top: 10vh">
+        <!--Menu popup for FMS mode and sim gamepads-->
+        <div id="menuPopup" class="unselectable">
+
+            <!--Interaction form with buttons and inputs-->
+            <div id="menuForm" class="form">
+
+                <!--Header to label the FMS Mode selector-->
                 <h2 class="form">FMS Mode</h2>
-                <select id="fmsSelector" class="form" style="margin-bottom: 2%">
+
+                <!--Selector for the FMS mode-->
+                <select id="fmsSelector" class="form">
+
+                    <!--Selector "Disabled" option-->
                     <option value="disabled">Disabled</option>
+
+                    <!--Selector "Auto" option-->
                     <option value="auto">Auto</option>
+
+                    <!--Selector "Teleop" option-->
                     <option value="teleop">Teleop</option>
+
+                    <!--Selector "Test" option-->
                     <option value="test">Test</option>
                 </select>
+
+                <!--Header to label the driver gamepad selector-->
                 <h2 class="form">Driver</h2>
-                <select id="driverSelector" class="form" style="margin-bottom: 2%"></select>
+
+                <!--Selector for the driver gamepad-->
+                <select id="driverSelector" class="form"></select>
+
+                <!--Header to label the operator gamepad selector-->
                 <h2 class="form">Operator</h2>
-                <select id="operatorSelector" class="form" style="margin-bottom: 2%"></select>
+
+                <!--Selector for the operator gamepad-->
+                <select id="operatorSelector" class="form"></select>
+
+                <!--Spacer-->
                 <br>
-                <button class="form" onclick="closeMenu()" style="background: var(--green)">Close</button>
+
+                <!--Button to close the popup-->
+                <button id="menuCloseButton" class="form" onclick="closeMenu()">Close</button>
             </div>
         </div>
 
+        <!--All js scripts used in the page and update selections-->
         <script src="/pages/webdashboard/assets/urlformdata.js"></script>
         <script src="/pages/webdashboard/values/values.js"></script>
+
     </body>
 </html>

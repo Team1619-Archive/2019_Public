@@ -1,17 +1,13 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
+import org.team1619.utilities.Timer;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
 import org.team1619.models.outputs.motors.Motor;
 import org.team1619.shared.abstractions.*;
 import org.team1619.utilities.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Follows a path using pure pursuit
@@ -20,7 +16,7 @@ import java.util.Map;
 public class Comp_Drive_Pure_Pursuit implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_Drive_Pure_Pursuit.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_drive");
+	private static final Set<String> sSubsystems = Set.of("ss_drive");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -198,7 +194,7 @@ public class Comp_Drive_Pure_Pursuit implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 }

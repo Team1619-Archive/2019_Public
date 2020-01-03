@@ -39,6 +39,12 @@ public class WebHttpServer {
 				e.close();
 			});
 
+			fHttpServer.createContext("/log", (e) -> {
+				fullWrite(e, readFile("webdashboard/log/log.html"));
+
+				e.close();
+			});
+
 			fHttpServer.start();
 		} catch (Exception e) {
 			e.printStackTrace();

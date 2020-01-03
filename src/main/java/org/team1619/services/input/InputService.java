@@ -1,6 +1,5 @@
 package org.team1619.services.input;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
 import org.team1619.utilities.injection.Inject;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
@@ -12,11 +11,10 @@ import org.team1619.shared.abstractions.InputValues;
 import org.team1619.shared.abstractions.ObjectsDirectory;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.YamlConfigParser;
+import org.team1619.utilities.services.ScheduledService;
+import org.team1619.utilities.services.Scheduler;
 
-import java.util.concurrent.TimeUnit;
-
-public class InputService extends AbstractScheduledService {
-
+public class InputService extends ScheduledService {
 
 	private static final Logger sLogger = LogManager.getLogger(InputService.class);
 
@@ -27,7 +25,8 @@ public class InputService extends AbstractScheduledService {
 	private final YamlConfigParser fNumericParser;
 	private final YamlConfigParser fVectorParser;
 	private double fPreviousTime;
-	private long MIN_FRAME_TIME;
+	private long FRAME_TIME_THRESHOLD;
+	private long FRAME_CYCLE_TIME_THRESHOLD;
 
 	@Inject
 	public InputService(ModelFactory modelFactory, InputValues inputValues, RobotConfiguration robotConfiguration, ObjectsDirectory objectsDirectory) {
@@ -48,7 +47,8 @@ public class InputService extends AbstractScheduledService {
 		fVectorParser.loadWithFolderName("vector-inputs.yaml");
 		fSharedObjectsDirectory.registerAllInputs(fBooleanParser, fNumericParser, fVectorParser);
 		fPreviousTime = -1;
-		MIN_FRAME_TIME = fRobotConfiguration.getInt("global_timing", "input_service_max_frame_time");
+		FRAME_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_time_threshold_input_service");
+		FRAME_CYCLE_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_cycle_time_threshold_input_service");
 
 		fSharedInputValues.setString("active states", "");
 
@@ -57,6 +57,8 @@ public class InputService extends AbstractScheduledService {
 
 	@Override
 	protected void runOneIteration() throws Exception {
+
+		double frameStartTime = System.currentTimeMillis();
 
 		for (String name : fRobotConfiguration.getBooleanInputNames()) {
 			BooleanInput booleanInput = fSharedObjectsDirectory.getBooleanInputObject(name);
@@ -87,20 +89,29 @@ public class InputService extends AbstractScheduledService {
 		//sLogger.debug("Updated vector inputs");
 
 		// Check for delayed frames
-		fPreviousTime = (fPreviousTime < 0) ? System.currentTimeMillis() : fPreviousTime;
 		double currentTime = System.currentTimeMillis();
-		double diffTime = currentTime - fPreviousTime;
-		fSharedInputValues.setNumeric("ni_input_service_frame_time", diffTime);
-		if (diffTime > MIN_FRAME_TIME) {
-			sLogger.info("********** Input Service frame time = {}", diffTime);
+		double frameTime = currentTime - frameStartTime;
+		double totalCycleTime = currentTime - fPreviousTime;
+		fSharedInputValues.setNumeric("ni_frame_time_input_service", frameTime);
+		fSharedInputValues.setNumeric("ni_frame_cycle_time_input_service", totalCycleTime);
+		if (frameTime > FRAME_TIME_THRESHOLD) {
+			sLogger.info("********** Input Service frame time = {}", frameTime);
+		}
+		if (totalCycleTime > FRAME_CYCLE_TIME_THRESHOLD) {
+			sLogger.info("********** Input Service frame cycle time = {}", totalCycleTime);
 		}
 		fPreviousTime = currentTime;
 
 	}
 
 	@Override
+	protected void shutDown() throws Exception {
+
+	}
+
+	@Override
 	protected Scheduler scheduler() {
-		return Scheduler.newFixedRateSchedule(0, 1000 / 60, TimeUnit.MILLISECONDS);
+		return new Scheduler(1000 / 60);
 	}
 
 	public void broadcast() {

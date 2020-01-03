@@ -1,62 +1,100 @@
+<!--html to configure the path page of the webdashboard,
+which has a table and graph to create and view purepursuit paths-->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
+    <!--Page title for web browser-->
     <title>Path</title>
 
+    <!--All css stylesheets used in the page-->
     <link rel="stylesheet" href="/pages/webdashboard/assets/style.css">
     <link rel="stylesheet" href="/pages/webdashboard/path/path.css">
+
 </head>
+
 <body ondblclick="openMenu()">
 
+<!--Wrapper for the graph to size properly to page-->
 <div class="chartWrapper" id="chartWrapper">
-    <canvas id="chart"></canvas>
+
+    <!--Canvas which is used by chart.js to make the graph-->
+    <canvas id="graph"></canvas>
 </div>
 
+<!--Table for the user to input points into-->
 <table id="pointTable">
+
+    <!--Table head with the header row-->
     <thead>
+
+    <!--Table header row-->
     <tr class="unselectable">
+
+        <!--X head cell-->
         <th>X</th>
+
+        <!--Y head cell-->
         <th>Y</th>
     </tr>
     </thead>
-    <tbody id="pointTableBody">
 
-    </tbody>
+    <!--Table body for the user to input points into-->
+    <tbody id="pointTableBody"></tbody>
 </table>
 
-<div class="unselectable" id="menuPopup"
-     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
+<!--Menu to clear, save, and load paths-->
+<div id="menuPopup" class="unselectable">
+
+    <!--Button wrapper to put the buttons in a horizontal layout-->
     <div class="form">
-        <button class="form" onclick="copyToClipboard()"
-                style="background: var(--orange);">Copy
-            Path
-        </button>
-        <button class="form" onclick="openPaste()"
-                style="background: var(--orange);">Paste
-            Path
-        </button>
-        <button class="form" onclick="clearPath()" style="background: var(--red)">Clear</button>
-        <button class="form" onclick="closeMenu()" style="background: var(--green)">Close</button>
+
+        <!--Copies the path to the computer clipboard as yaml a point array-->
+        <button id="copyButton" class="form" onclick="copyToClipboard()">Copy Path</button>
+
+        <!--Opens a menu for the user to enter/paste a path as a yaml point array-->
+        <button id="pasteButton" class="form" onclick="openPaste()">Paste Path</button>
+
+        <!--Clears all the points from the page-->
+        <button id="clearButton" class="form" onclick="clearPath()">Clear</button>
+
+        <!--Closes the menu-->
+        <button id="closeButton" class="form" onclick="closeMenu()">Close</button>
     </div>
 </div>
 
-<div class="unselectable" id="pastePopup"
-     style="background: rgba(0, 0, 0, 0.5); position: fixed; visibility: hidden; left: 0%; top: 0%; width: 100%; height: 100%;">
-    <div class="form" style="top: 20%">
+<!--Menu for the user to enter/paste a path as a yaml point array-->
+<div id="pastePopup" class="unselectable">
+
+    <!--Wrapper the the form in the paste menu, to put the contents in a vertical layout-->
+    <div id="pasteForm" class="form">
+
+        <!--Title for the input-->
         <h1>Path</h1>
-        <input id="pathInput" class="form">
+
+        <!--Text input for the user to enter/paste a path as a yaml point array-->
+        <input id="pathInput" class="form" autocomplete="off">
+
+        <!--Button wrapper to put the buttons in a horizontal layout-->
         <div>
-            <button class="form" onclick="closePaste(false)" style="background: var(--red); width: 30%">Close</button>
-            <button class="form" onclick="closePaste(true)" style="background: var(--green); width: 30%">Paste</button>
+
+            <!--Button to close the paste menu-->
+            <button id="pasteCloseButton" class="form" onclick="closePaste(false)">Close</button>
+
+            <!--Button put the path into the table and on the graph-->
+            <button id="pastePathButton" class="form" onclick="closePaste(true)">Paste</button>
         </div>
     </div>
 </div>
 
+<!--All js scripts used in the page-->
 <script src="/pages/webdashboard/assets/urlformdata.js"></script>
 <script src="/pages/webdashboard/assets/mathextras.js"></script>
 <script src="/pages/webdashboard/assets/chart.js"></script>
 <script src="/pages/webdashboard/assets/jquery.js"></script>
 <script src="/pages/webdashboard/path/path.js"></script>
+
 </body>
 </html>

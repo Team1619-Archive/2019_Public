@@ -2,8 +2,6 @@ package org.team1619.utilities;
 
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 public class TrapezoidTrajectory {
 
 	private double fDistance, fMaxVelocity, fAcceleration, fDeceleration, fStartVelocity, fEndVelocity;
@@ -83,7 +81,9 @@ public class TrapezoidTrajectory {
 	}
 
 	public void reset() {
-		checkNotNull(fTrajectoryPoints);
+		if(fTrajectoryPoints == null) {
+			throw new NullPointerException("fTrajectoryPoints is null");
+		}
 		assert fTrajectoryPoints.length >= 2;
 
 		fIndex = 0;
@@ -92,7 +92,10 @@ public class TrapezoidTrajectory {
 	}
 
 	public TrajectoryPoint getPoint(double distance) {
-		checkNotNull(fTrajectoryPoints);
+		if(fTrajectoryPoints == null) {
+			throw new NullPointerException("fTrajectoryPoints is null");
+		}
+
 		if (fIndex < fTrajectoryPoints.length && distance >= fDistance) {
 			fIndex = fTrajectoryPoints.length;
 		}
@@ -100,7 +103,9 @@ public class TrapezoidTrajectory {
 			return new TrajectoryPoint(distance, fEndVelocity, 0.0);
 		}
 
-		checkNotNull(fNextTrajectoryPoint);
+		if(fNextTrajectoryPoint == null) {
+			throw new NullPointerException("fNextTrajectoryPoint is null");
+		}
 		if (distance > fNextTrajectoryPoint.fDistance) {
 			do {
 				fIndex++;
@@ -109,7 +114,9 @@ public class TrapezoidTrajectory {
 			fTrajectoryPoint = fTrajectoryPoints[fIndex];
 		}
 
-		checkNotNull(fTrajectoryPoint);
+		if(fTrajectoryPoint == null) {
+			throw new NullPointerException("fTrajectoryPoint is null");
+		}
 		double velocity = (fNextTrajectoryPoint.fVelocity - fTrajectoryPoint.fVelocity) / (fNextTrajectoryPoint.fDistance - fTrajectoryPoint.fDistance) * (distance - fTrajectoryPoint.fDistance) + fTrajectoryPoint.fVelocity;
 		double acceleration = (fNextTrajectoryPoint.fAcceleration - fTrajectoryPoint.fAcceleration) / (fNextTrajectoryPoint.fDistance - fTrajectoryPoint.fDistance) * (distance - fTrajectoryPoint.fDistance) + fTrajectoryPoint.fAcceleration;
 		return new TrajectoryPoint(distance, velocity, acceleration);

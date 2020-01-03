@@ -32,11 +32,16 @@ teleop_controls:
   test_mode_button: bi_operator_start
 
 global_timing:
-  input_service_max_frame_time: 150
-  logger_service_max_frame_time: 150
-  ouput_service_max_frame_time: 150
-  state_service_max_frame_time: 150
-  web_service_max_frame_time: 150
+  frame_time_threshold_input_service: 80
+  frame_time_threshold_logging_service: 80
+  frame_time_threshold_output_service: 80
+  frame_time_threshold_state_service: 80
+  frame_time_threshold_webdashboard_service: 80
+  frame_cycle_time_threshold_input_service: 80
+  frame_cycle_time_threshold_logging_service: 80
+  frame_cycle_time_threshold_output_service: 80
+  frame_cycle_time_threshold_state_service: 80
+  frame_cycle_time_threshold_webdashboard_service: 80
 
 global_drive:
   x: ni_driver_right_x
@@ -106,11 +111,16 @@ global_climber:
   error_timer_length: 100
 
 log:
-  ni_input_service_frame_time: false
-  ni_logging_service_frame_time: false
-  ni_output_service_frame_time: false
-  ni_state_service_frame_time: false
-  ni_web_service_frame_time: false
+  ni_frame_time_input_service: false
+  ni_frame_time_logging_service: false
+  ni_frame_time_output_service: false
+  ni_frame_time_state_service: false
+  ni_frame_time_webdashboard_service: false
+  ni_frame_cycle_time_input_service: false
+  ni_frame_cycle_time_logging_service: false
+  ni_frame_cycle_time_output_service: false
+  ni_frame_cycle_time_states_service: false
+  ni_frame_cycle_time_webdashboard_service: false
   bi_elevator_has_been_zeroed: false
   bi_climber_has_been_zeroed: false
   bi_ball_collector_has_been_zeroed: false

@@ -92,7 +92,7 @@ public class StateMachine {
 		Set<State> currentlyActiveStates = new HashSet<>();
 		Set<State> defaultStates = new HashSet<>();
 		Set<String> subsystems = fRobotConfiguration.getSubsystemNames();
-		Set<State> currentlyActuveStatesThatAreNotInterruptible = new HashSet<>();
+		Set<State> CurrentlyActiveStatesThatAreNotInterruptible = new HashSet<>();
 
 		// Loop through every possible state
 		for (String name : fRobotConfiguration.getStateNames()) {
@@ -137,7 +137,7 @@ public class StateMachine {
 			// Each state takes the subsystem(s) it requires in order of the priority above. Once the subsystem is taken, all lower priority states have to wait until the subsystem(s) it requires becomes available.
 			if (isCurrentlyActive && doNotInterrupt && !isDone) {
 				// If the state is currently active and can not be interrupted, then add it to a list that will be given first priority
-				currentlyActuveStatesThatAreNotInterruptible.add(state);
+				CurrentlyActiveStatesThatAreNotInterruptible.add(state);
 			} else if (!isCurrentlyActive && isReady && !isDefaultSate) {
 				// If the state is not currently active, but is ready and not a default state, then add it to a list that will be given second priority
 				nonActiveStatesThatAreReady.add(state);
@@ -151,7 +151,7 @@ public class StateMachine {
 		}
 
 		// Add any states that are currently active and are non-interruptible to the list of next active states
-		for (State state : currentlyActuveStatesThatAreNotInterruptible) {
+		for (State state : CurrentlyActiveStatesThatAreNotInterruptible) {
 			if (isSubsystemAvailable(state, subsystems)) {
 				primaryNextActiveStates.add(state);
 			}

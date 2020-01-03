@@ -1,6 +1,5 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
@@ -11,6 +10,7 @@ import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.Timer;
+import java.util.Set;
 
 /**
  * Runs the climber to a set position then cuts the power until the climber falls below/ rises above that position then returns power
@@ -20,7 +20,7 @@ import org.team1619.utilities.Timer;
 public class Comp_Climber_States implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_Climber_States.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_climber");
+	private static final Set<String> sSubsystems = Set.of("ss_climber");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -252,12 +252,12 @@ public class Comp_Climber_States implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 
 	private void print() {
-		sLogger.debug("Climber Set -> Desired Position = {}, Motor Speed = {}, Vacuum Pump Speed = {}, Vacuum Sensor = {}", fDesiredPosition, fSharedOutputValues.getMotorOutputValue("mo_climber_group"), fVacuumPumpSpeed, fSharedInputValues.getNumeric(fVacuumSensor, null));
+		sLogger.debug("Climber Set -> Desired Position = {}, Motor Speed = {}, Vacuum Pump Speed = {}, Vacuum Sensor = {}", fDesiredPosition, fSharedOutputValues.getMotorOutputs("mo_climber_group").get("value"), fVacuumPumpSpeed, fSharedInputValues.getNumeric(fVacuumSensor, null));
 	}
 
 }

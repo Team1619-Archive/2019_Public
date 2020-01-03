@@ -1,12 +1,10 @@
 package org.team1619.models.state;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.robot.ModelFactory;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.YamlConfigParser;
-
 import java.util.*;
 
 /**
@@ -77,7 +75,7 @@ public class ParallelState implements State {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		// Returns a list of all the subsystems required by all the states it is running
 		List<String> subsystems = new ArrayList<>();
 		for(State foregroundState : fForegroundStates){
@@ -86,7 +84,7 @@ public class ParallelState implements State {
 		for(State backgroundState: fBackgroundStates){
 			subsystems.addAll(backgroundState.getSubsystems());
 		}
-		return ImmutableSet.copyOf(subsystems);
+		return Set.copyOf(subsystems);
 	}
 
 	@Override

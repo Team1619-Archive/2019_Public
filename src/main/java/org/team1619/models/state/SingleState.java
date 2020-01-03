@@ -1,17 +1,14 @@
 package org.team1619.models.state;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
 import org.team1619.robot.ModelFactory;
 import org.team1619.shared.abstractions.ObjectsDirectory;
 import org.team1619.utilities.Config;
-
 import java.util.Arrays;
 import java.util.List;
-
-import static com.google.common.base.Preconditions.checkNotNull;
+import java.util.Set;
 
 /**
  * The base for all states
@@ -65,31 +62,27 @@ public class SingleState implements State {
 
 	@Override
 	public void update() {
-		checkNotNull(fBehavior);
 		fBehavior.update();
 
 	}
 
 	@Override
 	public void dispose() {
-		checkNotNull(fBehavior);
 		fBehavior.dispose();
 	}
 
 	@Override
 	public boolean isDone() {
-		checkNotNull(fBehavior);
 		return fBehavior.isDone();
 	}
 
 	@Override
 	public boolean isRequestingDisposal() {
-		checkNotNull(fBehavior);
 		return fBehavior.isRequestingDisposal();
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return fBehavior.getSubsystems();
 	}
 

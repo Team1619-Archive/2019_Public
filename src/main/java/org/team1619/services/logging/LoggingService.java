@@ -1,6 +1,5 @@
 package org.team1619.services.logging;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
 import org.team1619.utilities.injection.Inject;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
@@ -8,13 +7,14 @@ import org.team1619.shared.abstractions.Dashboard;
 import org.team1619.shared.abstractions.InputValues;
 import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
+import org.team1619.utilities.services.ScheduledService;
+import org.team1619.utilities.services.Scheduler;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
-public class LoggingService extends AbstractScheduledService {
+public class LoggingService extends ScheduledService {
 	private static final Logger sLogger = LogManager.getLogger(LoggingService.class);
 
 	private final InputValues fSharedInputValues;
@@ -22,7 +22,8 @@ public class LoggingService extends AbstractScheduledService {
 	private final RobotConfiguration fRobotConfiguration;
 	private final Dashboard fDashboard;
 	private double fPreviousTime;
-	private long MIN_FRAME_TIME;
+	private long FRAME_TIME_THRESHOLD;
+	private long FRAME_CYCLE_TIME_THRESHOLD;
 
 
 	private Set<String> fDesiredLogs = new HashSet<>();
@@ -53,7 +54,8 @@ public class LoggingService extends AbstractScheduledService {
 		sLogger.debug(valuesToLog);
 
 		fPreviousTime = -1;
-		MIN_FRAME_TIME = fRobotConfiguration.getInt("global_timing", "logger_service_max_frame_time");
+		FRAME_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_time_threshold_logging_service");
+		FRAME_CYCLE_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_cycle_time_threshold_logging_service");
 
 		fDashboard.initialize();
 
@@ -62,6 +64,9 @@ public class LoggingService extends AbstractScheduledService {
 
 	@Override
 	protected void runOneIteration() throws Exception {
+
+		double frameStartTime = System.currentTimeMillis();
+
 		for (String name : fDesiredLogs) {
 			String type = name.substring(0, 2);
 			switch (type) {
@@ -78,7 +83,7 @@ public class LoggingService extends AbstractScheduledService {
 					}
 					break;
 				case "mo":
-					fDashboard.putNumber(name, fSharedOutputValues.getMotorOutputValue(name));
+					fDashboard.putNumber(name, (double) fSharedOutputValues.getMotorOutputs(name).get("value"));
 					break;
 				case "so":
 					fDashboard.putBoolean(name, fSharedOutputValues.getSolenoidOutputValue(name));
@@ -92,26 +97,37 @@ public class LoggingService extends AbstractScheduledService {
 			}
 		}
 
-		// Check for delayed frames
-		fPreviousTime = (fPreviousTime < 0) ? System.currentTimeMillis() : fPreviousTime;
-		double currentTime = System.currentTimeMillis();
-		double diffTime = currentTime - fPreviousTime;
-		fSharedInputValues.setNumeric("ni_logging_service_frame_time", diffTime);
-		if (diffTime > MIN_FRAME_TIME) {
-			sLogger.info("********** Logging Service frame time = {}", diffTime);
-		}
-		fPreviousTime = currentTime;
+
+
 
 		//Check for auto selection
 		if(fDashboard.autoSelectionRisingEdge()) {
 			fDashboard.smartdashboardSetAuto();
 		}
 
+
+		// Check for delayed frames
+		double currentTime = System.currentTimeMillis();
+		double frameTime = currentTime - frameStartTime;
+		double totalCycleTime = currentTime - fPreviousTime;
+		fSharedInputValues.setNumeric("ni_frame_time_logging_service", frameTime);
+		fSharedInputValues.setNumeric("ni_frame_cycle_time_logging_service", totalCycleTime);
+		if (frameTime > FRAME_TIME_THRESHOLD) {
+			sLogger.info("********** Logging Service frame time = {}", frameTime);
+		}
+		if (totalCycleTime > FRAME_CYCLE_TIME_THRESHOLD) {
+			sLogger.info("********** Logging Service frame cycle time = {}", totalCycleTime);
+		}
+		fPreviousTime = currentTime;
+	}
+
+	@Override
+	protected void shutDown() throws Exception {
+
 	}
 
 	@Override
 	protected Scheduler scheduler() {
-		return Scheduler.newFixedRateSchedule(0, 1000 / 60, TimeUnit.MILLISECONDS);
+		return new Scheduler(1000 / 60);
 	}
-
 }

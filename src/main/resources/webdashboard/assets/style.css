@@ -1,7 +1,9 @@
+/*Contains colors and classes used throughout the webdashboard*/
+
+/*Colors used through the dashboard*/
 :root {
     --background: #20201E;
     --foreground: #2b33ff;
-    /*--foreground: #ff0a3c;*/
     --grey: darkgrey;
     --white: whitesmoke;
     --red: orangered;
@@ -14,10 +16,11 @@
     --orange: orange;
     --yellow: yellow;
 
-    /*graph color*/
+    /*Graph tick and grid color*/
     --graph: orangered;
 }
 
+/*Configures the default page body for each page*/
 body, html {
     position: fixed !important;
     background: var(--background);
@@ -27,6 +30,7 @@ body, html {
     height: 100%;
 }
 
+/*Use to make an element unselectable/highlightable*/
 .unselectable {
     -webkit-user-select: none;
     -moz-user-select: none;

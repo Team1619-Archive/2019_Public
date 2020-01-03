@@ -1,6 +1,5 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
@@ -11,6 +10,7 @@ import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.Timer;
+import java.util.Set;
 
 /**
  * Zeros the ball collector
@@ -20,7 +20,7 @@ import org.team1619.utilities.Timer;
 public class Comp_BallCollector_Zero implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_BallCollector_Zero.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_ball_collector");
+	private static final Set<String> sSubsystems = Set.of("ss_ball_collector");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -31,6 +31,8 @@ public class Comp_BallCollector_Zero implements Behavior {
 
 	private String fBallCollectorVelocitySensor;
 	private double fSetpoint;
+	private double fZeroSpeed;
+	private double fHoldSpeed;
 	private Timer fTimer;
 
 	public Comp_BallCollector_Zero(InputValues inputValues, OutputValues outputValues, Config config, Dashboard dashboard, RobotConfiguration robotConfiguration) {
@@ -50,6 +52,9 @@ public class Comp_BallCollector_Zero implements Behavior {
 		fStateName = stateName;
 		fTimer.reset();
 		fSetpoint = config.getDouble("setpoint", 5.0);
+		fZeroSpeed = config.getDouble("zero_speed", 0.0);
+		fHoldSpeed = config.getDouble("hold_zero", 0.0);
+
 		fSharedInputValues.setNumeric("ni_ball_collector_setpoint", fSetpoint);
 		fSharedInputValues.setString("si_ball_collector_current_position", "protect");
 	}
@@ -59,7 +64,7 @@ public class Comp_BallCollector_Zero implements Behavior {
 		double velocity = fSharedInputValues.getNumeric(fBallCollectorVelocitySensor);
 
 		if(!fSharedInputValues.getBoolean("bi_ball_collector_has_been_zeroed", null)) {
-			fSharedOutputValues.setMotorOutputValue("mo_ball_collector_pivot", Motor.OutputType.PERCENT, -0.35, null);
+			fSharedOutputValues.setMotorOutputValue("mo_ball_collector_pivot", Motor.OutputType.PERCENT, fZeroSpeed, null);
 
 			if (!fTimer.isStarted() && velocity < ZERO_VELOCITY_ERROR_THRESHOLD) {
 				fTimer.start(500);
@@ -68,7 +73,7 @@ public class Comp_BallCollector_Zero implements Behavior {
 			}
 
 			if (fTimer.isDone()) {
-				fSharedOutputValues.setMotorOutputValue("mo_ball_collector_pivot", Motor.OutputType.PERCENT, -0.1, "zero");
+				fSharedOutputValues.setMotorOutputValue("mo_ball_collector_pivot", Motor.OutputType.PERCENT, fHoldSpeed, "zero");
 				if(Math.abs(fSharedInputValues.getNumeric("ni_ball_collector_pivot_position", null)) < 0.5){
 					fSharedInputValues.setBoolean("bi_ball_collector_has_been_zeroed", true);
 					sLogger.info("Ball Collector Zero -> Zeroed");
@@ -96,7 +101,7 @@ public class Comp_BallCollector_Zero implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 

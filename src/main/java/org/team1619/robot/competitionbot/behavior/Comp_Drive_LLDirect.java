@@ -1,6 +1,5 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
@@ -10,6 +9,7 @@ import org.team1619.shared.abstractions.InputValues;
 import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.Config;
+import java.util.Set;
 
 /**
  * Aligns the robot with a target detected by the limelight
@@ -18,7 +18,7 @@ import org.team1619.utilities.Config;
 public class Comp_Drive_LLDirect implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_Drive_LLDirect.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_drive");
+	private static final Set<String> sSubsystems = Set.of("ss_drive");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -134,7 +134,7 @@ public class Comp_Drive_LLDirect implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 

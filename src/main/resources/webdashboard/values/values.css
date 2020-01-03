@@ -1,5 +1,15 @@
+/*html to configure the values page of the webdashboard,
+which has a table for viewing values in the robot code's input and output service,
+an area for the user to put values they want to see,
+allows the user to change values in sim mode,
+and handles gamepad input in sim mode*/
+
 body {
     display: flex;
+}
+
+#valueTableHeader {
+    width: 100%;
 }
 
 table {
@@ -38,6 +48,140 @@ td {
 
 .typeCell {
     max-width: 10vw !important;
+}
+
+#dragContainer {
+    flex-grow: 100;
+}
+
+#valuePopup {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    visibility: hidden;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+#valueForm {
+    top: 20%;
+    padding: 0 0 3% 0;
+}
+
+#valueInputWrapper {
+    text-align: center;
+    position: relative;
+    top: 10%;
+    height: 20%;
+}
+
+#vectorInputSelector {
+    position: relative;
+    display: none;
+    left: 20%;
+    width: 60%;
+    height: 8vh;
+    margin-bottom: 2vh;
+}
+
+#valueInput {
+    left: 20%;
+    margin-bottom: 2%;
+    height: 8vh;
+}
+
+#valueButtonWrapper {
+    position: relative;
+    top: 20%;
+    height: 20%;
+}
+
+#viewerButton {
+    background: var(--orange);
+    width: auto;
+    height: 80%;
+}
+
+#toggleGraphButton {
+    background: var(--orange);
+    width: auto;
+    height: 80%;
+}
+
+#closeButton {
+    width: auto;
+    height: 80%;
+    background: var(--red);
+}
+
+#updateButton {
+    background: var(--green);
+    width: auto;
+    height: 80%;
+}
+
+#vectorGraphingPopup {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    visibility: hidden;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#vectorForm {
+    top: 20%;
+    padding: 0 0 3% 0;
+}
+
+#vectorButtonWrapper {
+    position: relative;
+    top: 20%;
+    height: 20%;
+}
+
+#vectorCloseButton {
+    width: auto;
+    height: 80%;
+    background: var(--red);
+}
+
+#vectorGraphButton {
+    width: auto;
+    height: 80%;
+    background: var(--green);
+}
+
+#menuPopup {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    visibility: hidden;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#menuForm {
+    top: 10vh;
+}
+
+#fmsSelector {
+    margin-bottom: 2%;
+}
+
+#driverSelector {
+    margin-bottom: 2%;
+}
+
+#operatorSelector {
+    margin-bottom: 2%;
+}
+
+#menuCloseButton {
+    background: var(--green);
 }
 
 h2.form {

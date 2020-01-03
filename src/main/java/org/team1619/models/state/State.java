@@ -1,8 +1,7 @@
 package org.team1619.models.state;
 
-import com.google.common.collect.ImmutableSet;
-
 import java.util.List;
+import java.util.Set;
 
 public interface State {
 
@@ -14,7 +13,7 @@ public interface State {
 	/**
 	 * @return a list of subsystems required by the state
 	 */
-	ImmutableSet<String> getSubsystems();
+	Set<String> getSubsystems();
 
 	/**
 	 * @return a list of states managed by this state

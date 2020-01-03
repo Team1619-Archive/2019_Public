@@ -1,6 +1,5 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
@@ -11,6 +10,7 @@ import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.Timer;
+import java.util.Set;
 
 /**
  * Moves the ball collector arm to the setpoint specified in the state and then idles at that position until interupted by the next state.
@@ -20,7 +20,7 @@ import org.team1619.utilities.Timer;
 public class Comp_BallCollector_States implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_BallCollector_States.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_ball_collector");
+	private static final Set<String> sSubsystems = Set.of("ss_ball_collector");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -222,13 +222,13 @@ public class Comp_BallCollector_States implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 
 
 	private void print() {
-		sLogger.debug("Ball Collector Set -> Desired Position = {}, Pivot Motor Setpoint = {}, Roller Speed = {}", fDesiredPosition, fSharedOutputValues.getMotorOutputValue("mo_ball_collector_pivot"), fCurrentRollerSpeed);
+		sLogger.debug("Ball Collector Set -> Desired Position = {}, Pivot Motor Setpoint = {}, Roller Speed = {}", fDesiredPosition, fSharedOutputValues.getMotorOutputs("mo_ball_collector_pivot").get("value"), fCurrentRollerSpeed);
 	}
 
 }

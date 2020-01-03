@@ -209,6 +209,8 @@ single_state:
     behavior: bh_ball_collector_zero
     behavior_config:
       setpoint: 1.0
+      zero_speed: -0.35
+      hold_speed: -0.1
 
   st_ball_collector_protect:
     behavior: bh_ball_collector_states

@@ -1,5 +1,6 @@
 package org.team1619.shared.concretions;
 
+import org.team1619.models.outputs.motors.MotorGroup;
 import org.team1619.utilities.injection.Singleton;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
@@ -16,47 +17,37 @@ public class SharedOutputValues implements OutputValues {
 
 	private static final Logger sLogger = LogManager.getLogger(SharedOutputValues.class);
 
-	private Map<String, Double> fMotorOutputsValues = new ConcurrentHashMap<>();
-	private Map<String, Motor.OutputType> fMotorOutputTypes = new ConcurrentHashMap<>();
-	private Map<String, Object> fMotorFlags = new ConcurrentHashMap<>();
+	private Map<String, Map<String, Object>> fMotorOutputs = new ConcurrentHashMap<>();
 	private Map<String, Boolean> fSolenoidOutputsValues = new ConcurrentHashMap<>();
 	private Map<String, Map<Integer, Double>> fMotorCurrentValues = new ConcurrentHashMap<>();
 
 	//Motor
 	@Override
-	public double getMotorOutputValue(String motorName) {
-		return fMotorOutputsValues.getOrDefault(motorName, 0.0);
+	public Map<String, Object> getMotorOutputs(String motorName) {
+		return  fMotorOutputs.getOrDefault(motorName, Map.of("value", 0.0, "type", MotorGroup.OutputType.PERCENT));
 	}
 
 	@Override
 	public Map<String, Object> getAllOutputs() {
 		Map<String, Object> allOutputs = new HashMap<>();
 
-		allOutputs.putAll(fMotorOutputsValues);
+		for (HashMap.Entry<String, Map<String,Object>> motor : fMotorOutputs.entrySet()) {
+			allOutputs.put(motor.getKey(), motor.getValue().get("value"));
+		}
 		allOutputs.putAll(fSolenoidOutputsValues);
 
 		return allOutputs;
 	}
 
 	@Override
-	public Motor.OutputType getMotorType(String motorName) {
-		return fMotorOutputTypes.getOrDefault(motorName, Motor.OutputType.PERCENT);
-	}
-
-	@Override
-	public Object getMotorFlag(String motorName) {
-		return fMotorFlags.getOrDefault(motorName, null);
-	}
-
-	@Override
 	public void setMotorOutputValue(String motorName, Motor.OutputType motorType, double outputValue, @Nullable Object flag) {
 		//sLogger.debug("Setting motor '{}' to {} ({})", motorName, outputValue, motorType);
-		fMotorOutputsValues.put(motorName, outputValue);
-		fMotorOutputTypes.put(motorName, motorType);
-		if(flag == null){
-			fMotorFlags.remove(motorName);
+		//Add the motor outputs to the fMotorOutputs map
+		if(flag != null) {
+			fMotorOutputs.put(motorName, Map.of("value", outputValue, "type", motorType, "flag", flag));
 		} else {
-			fMotorFlags.put(motorName, flag);
+			//If a null flag was passed in, do not add anything to the map so if the key 'flag' is called it will return null
+			fMotorOutputs.put(motorName, Map.of("value", outputValue, "type", motorType));
 		}
 	}
 

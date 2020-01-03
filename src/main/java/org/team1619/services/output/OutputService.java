@@ -1,6 +1,5 @@
 package org.team1619.services.output;
 
-import com.google.common.util.concurrent.AbstractScheduledService;
 import org.team1619.utilities.injection.Inject;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
@@ -12,10 +11,11 @@ import org.team1619.shared.abstractions.ObjectsDirectory;
 import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.YamlConfigParser;
+import org.team1619.utilities.services.ScheduledService;
+import org.team1619.utilities.services.Scheduler;
+import java.util.Map;
 
-import java.util.concurrent.TimeUnit;
-
-public class OutputService extends AbstractScheduledService {
+public class OutputService extends ScheduledService {
 
 	private static final Logger sLogger = LogManager.getLogger(OutputService.class);
 
@@ -26,7 +26,8 @@ public class OutputService extends AbstractScheduledService {
 	private final YamlConfigParser fMotorsParser;
 	private final YamlConfigParser fSolenoidsParser;
 	private double fPreviousTime;
-	private long MIN_FRAME_TIME;
+	private long FRAME_TIME_THRESHOLD;
+	private long FRAME_CYCLE_TIME_THRESHOLD;
 
 
 	@Inject
@@ -48,35 +49,51 @@ public class OutputService extends AbstractScheduledService {
 		fSolenoidsParser.loadWithFolderName("solenoids.yaml");
 		fSharedOutputsDirectory.registerAllOutputs(fMotorsParser, fSolenoidsParser);
 
-		MIN_FRAME_TIME = fRobotConfiguration.getInt("global_timing", "ouput_service_max_frame_time");
+		FRAME_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_time_threshold_output_service");
+		FRAME_CYCLE_TIME_THRESHOLD = fRobotConfiguration.getInt("global_timing", "frame_cycle_time_threshold_output_service");
 
 		sLogger.debug("OutputService started");
 	}
 
 	@Override
 	protected void runOneIteration() throws Exception {
+
+		double frameStartTime = System.currentTimeMillis();
+
 		for (String motorName : fRobotConfiguration.getMotorNames()) {
 			Motor motorObject = fSharedOutputsDirectory.getMotorObject(motorName);
-			motorObject.setHardware(fSharedOutputValues.getMotorType(motorName), fSharedOutputValues.getMotorOutputValue(motorName), fSharedOutputValues.getMotorFlag(motorName));
+			Map<String, Object> motorOutputs = fSharedOutputValues.getMotorOutputs(motorName);
+			motorObject.setHardware((Motor.OutputType) motorOutputs.get("type"), (double) motorOutputs.get("value"), motorOutputs.get("flag"));
 			//fSharedOutputValues.putMotorCurrentValues(motorName, motorObject.getMotorCurrentValues());
 		}
 		for (String solenoidName : fRobotConfiguration.getSolenoidNames()) {
 			Solenoid solenoidObject = fSharedOutputsDirectory.getSolenoidObject(solenoidName);
 			solenoidObject.setHardware(fSharedOutputValues.getSolenoidOutputValue(solenoidName));
 		}
+
 		// Check for delayed frames
-		fPreviousTime = (fPreviousTime < 0) ? System.currentTimeMillis() : fPreviousTime;
 		double currentTime = System.currentTimeMillis();
-		double diffTime = currentTime - fPreviousTime;
-		fSharedInputValues.setNumeric("ni_output_service_frame_time", diffTime);
-		if (diffTime > MIN_FRAME_TIME) {
-			sLogger.info("********** Output Service frame time = {}", diffTime);
+		double frameTime = currentTime - frameStartTime;
+		double totalCycleTime = currentTime - fPreviousTime;
+		fSharedInputValues.setNumeric("ni_frame_time_output_service", frameTime);
+		fSharedInputValues.setNumeric("ni_frame_cycle_time_output_service", totalCycleTime);
+		if (frameTime > FRAME_TIME_THRESHOLD) {
+			sLogger.info("********** Output Service frame time = {}", frameTime);
+		}
+		if (totalCycleTime > FRAME_CYCLE_TIME_THRESHOLD) {
+			sLogger.info("********** Output Service frame cycle time = {}", totalCycleTime);
 		}
 		fPreviousTime = currentTime;
+
+	}
+
+	@Override
+	protected void shutDown() throws Exception {
+
 	}
 
 	@Override
 	protected Scheduler scheduler() {
-		return Scheduler.newFixedRateSchedule(0, 1000 / 60, TimeUnit.MILLISECONDS);
+		return new Scheduler(1000 / 60);
 	}
 }

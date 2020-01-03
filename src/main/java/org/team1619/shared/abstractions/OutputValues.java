@@ -9,13 +9,9 @@ import java.util.Map;
 public interface OutputValues {
 
 	//Motor
-	double getMotorOutputValue(String motorName);
+	Map<String, Object> getMotorOutputs (String motorName);
 
 	Map<String, Object> getAllOutputs();
-
-	Motor.OutputType getMotorType(String motorName);
-
-	Object getMotorFlag(String motorName);
 
 	void setMotorOutputValue(String motorName, Motor.OutputType outputType, double outputValue, @Nullable Object flag);
 

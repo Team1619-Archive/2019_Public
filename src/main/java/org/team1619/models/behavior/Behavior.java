@@ -1,14 +1,15 @@
 package org.team1619.models.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.Config;
+
+import java.util.Set;
 
 public interface Behavior {
 
 	/**
 	 * @return a list of subsystems required by the behavior
 	 */
-	ImmutableSet<String> getSubsystems();
+	Set<String> getSubsystems();
 
 	/**
 	 * Initializes the behavior to run the requested state

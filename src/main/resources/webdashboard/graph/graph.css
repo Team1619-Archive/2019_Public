@@ -1,13 +1,14 @@
-button.form {
-    position: relative;
-    top: 5%;
-    margin-top: 5%;
-    width: 50%;
-    height: 20%;
-    border-radius: 2vh;
-    border-width: 0;
-    font-size: 5vmin;
-    color: darkslategrey;
+/*css code to style the main page of the graph page of the webdashboard,
+which graphs data from the robot code using the values page*/
+
+#menuPopup {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    visibility: hidden;
+    left: 0%;
+    top: 0%;
+    width: 100%;
+    height: 100%;
 }
 
 div.form {
@@ -21,4 +22,24 @@ div.form {
     width: 60%;
     height: 40%;
     text-align: center;
+}
+
+button.form {
+    position: relative;
+    top: 5%;
+    margin-top: 5%;
+    width: 50%;
+    height: 20%;
+    border-radius: 2vh;
+    border-width: 0;
+    font-size: 5vmin;
+    color: darkslategrey;
+}
+
+#clearButton {
+    background: var(--red);
+}
+
+#closeButton {
+    background: var(--green);
 }

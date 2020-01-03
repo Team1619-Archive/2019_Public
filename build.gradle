@@ -68,7 +68,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
     compile group: 'com.google.guava', name: 'guava', version: '25.1-jre'
-    compile group: 'com.google.inject', name: 'guice', version: '4.2.0'
     compile 'com.google.code.gson:gson:2.8.5'
     compile 'org.yaml:snakeyaml:1.21'
     compile "org.apache.commons:commons-csv:1.5"

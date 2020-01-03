@@ -1,6 +1,5 @@
 package org.team1619.robot.competitionbot.behavior;
 
-import com.google.common.collect.ImmutableSet;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.models.behavior.Behavior;
@@ -11,6 +10,7 @@ import org.team1619.shared.abstractions.OutputValues;
 import org.team1619.shared.abstractions.RobotConfiguration;
 import org.team1619.utilities.Config;
 import org.team1619.utilities.Timer;
+import java.util.Set;
 
 /**
  * Zeros the climber
@@ -19,7 +19,7 @@ import org.team1619.utilities.Timer;
 public class Comp_Drive_Zero implements Behavior {
 
 	private static final Logger sLogger = LogManager.getLogger(Comp_Drive_Zero.class);
-	private static final ImmutableSet<String> sSubsystems = ImmutableSet.of("ss_drive");
+	private static final Set<String> sSubsystems = Set.of("ss_drive");
 
 	private final InputValues fSharedInputValues;
 	private final OutputValues fSharedOutputValues;
@@ -95,7 +95,7 @@ public class Comp_Drive_Zero implements Behavior {
 	}
 
 	@Override
-	public ImmutableSet<String> getSubsystems() {
+	public Set<String> getSubsystems() {
 		return sSubsystems;
 	}
 

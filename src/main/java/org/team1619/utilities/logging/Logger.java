@@ -1,5 +1,9 @@
 package org.team1619.utilities.logging;
 
+/**
+ *  Handles the log messages of a single class
+ */
+
 public class Logger {
 
 	private final LogManager fLogManager;

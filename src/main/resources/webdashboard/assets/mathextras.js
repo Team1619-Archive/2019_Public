@@ -1,3 +1,5 @@
+//Stores point data for the path page
+//Emulates the java Point class
 class Point {
 
     constructor(x, y) {
@@ -22,6 +24,8 @@ class Point {
     }
 }
 
+//Stores vector data for the path page
+//Emulates the java Vector class
 class Vector extends Point {
 
     constructor(point1, point2) {

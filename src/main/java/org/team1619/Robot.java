@@ -1,7 +1,5 @@
 package org.team1619;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.util.concurrent.ServiceManager;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -19,10 +17,13 @@ import org.team1619.utilities.YamlConfigParser;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.utilities.injection.Injector;
+import org.team1619.utilities.services.Scheduler;
+import org.team1619.utilities.services.managers.ScheduledLinearServiceManager;
+import org.team1619.utilities.services.managers.ServiceManager;
 
 public class Robot extends TimedRobot {
 
-	private static final Logger sLogger = LogManager.getLogger(Main.class);
+	private static final Logger sLogger = LogManager.getLogger(Robot.class);
 
 	private Injector fInjector;
 	private ServiceManager fServiceManager;
@@ -52,10 +53,10 @@ public class Robot extends TimedRobot {
 		// TODO comment out to turn off webdashboard service
 		RobotWebDashboardService robotWebDashboardService = fInjector.getInstance(RobotWebDashboardService.class);
 
-		fServiceManager = new ServiceManager(ImmutableSet.of(statesService, fInputService, outputService, loggingService, robotWebDashboardService));
+		fServiceManager = new ScheduledLinearServiceManager(new Scheduler(30), fInputService, statesService, outputService, loggingService, robotWebDashboardService);
 
 		// TODO comment in to when turning off webdashboard service
-		//fServiceManager = new ServiceManager(ImmutableSet.of(statesService, fInputService, outputService, loggingService));
+		//fServiceManager = new ScheduledLinearServiceManager(new Scheduler(30), Set.of(statesService, fInputService, outputService, loggingService));
 
 		fFMS = fInjector.getInstance(FMS.class);
 	}
@@ -66,7 +67,7 @@ public class Robot extends TimedRobot {
 		sLogger.info("Initializing RobotConfiguration");
 		fInjector.getInstance(RobotConfiguration.class).initialize();
 		sLogger.info("Starting services");
-		fServiceManager.startAsync();
+		fServiceManager.start();
 		fServiceManager.awaitHealthy();
 		fInputService.broadcast();
 

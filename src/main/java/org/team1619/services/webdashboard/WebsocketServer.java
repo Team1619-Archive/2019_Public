@@ -2,6 +2,8 @@ package org.team1619.services.webdashboard;
 
 import org.team1619.services.webdashboard.websocket.AbstractWebsocketServer;
 import org.team1619.services.webdashboard.websocket.WebSocket;
+import org.team1619.utilities.LimitedSizeQueue;
+import org.team1619.utilities.logging.LogHandler;
 import org.team1619.utilities.logging.LogManager;
 import org.team1619.utilities.logging.Logger;
 import org.team1619.events.sim.SimBooleanInputSetEvent;
@@ -18,7 +20,7 @@ import java.util.*;
  * @author Matthew Oates
  */
 
-public class WebsocketServer extends AbstractWebsocketServer {
+public class WebsocketServer extends AbstractWebsocketServer implements LogHandler {
 
 	private static final Logger sLogger = LogManager.getLogger(WebsocketServer.class);
 
@@ -47,6 +49,7 @@ public class WebsocketServer extends AbstractWebsocketServer {
 	private Map<String, Object> fLastOutputs = new HashMap<>();
 	private Map<String, Map<String, Object>> fMatchValues = new HashMap<>();
 	private final Map<String, Object> fLastMatchValues = new HashMap<>();
+	private Queue<Map<String, String>> fLogMessages = new LimitedSizeQueue<>(100);
 
 	public WebsocketServer(int port, EventBus eventBus, FMS fms, InputValues inputValues, OutputValues outputValues, RobotConfiguration robotConfiguration) {
 		super(port);
@@ -58,6 +61,8 @@ public class WebsocketServer extends AbstractWebsocketServer {
 		fRobotConfiguration = robotConfiguration;
 
 		fSharedInputValues.setString("si_selected_auto", "No Auto");
+
+		LogManager.addLogHandler(this);
 	}
 
 	public void initialize() {
@@ -69,12 +74,9 @@ public class WebsocketServer extends AbstractWebsocketServer {
 		start();
 	}
 
-	//Tells web page to log a line
-	public void log(String text) {
-		send(fLogSockets, new UrlFormData()
-				.add("response", "log")
-				.add("text", text.trim() + "\n")
-				.getData());
+	//Puts a log message into the cue to be sent to the dashboard
+	public void log(String type, String message) {
+		fLogMessages.add(Map.of("type", type, "message", message));
 	}
 
 	//Called by the service every frame
@@ -82,11 +84,13 @@ public class WebsocketServer extends AbstractWebsocketServer {
 		broadcastValuesDataToWebDashboard();
 
 		broadcastMatchDataToWebDashboard();
+
+		broadcastLogDataToWebDashboard();
 	}
 
 	//Send information for the values page
 	private void broadcastValuesDataToWebDashboard() {
-		if (fValuesSockets.size() < 1) return;
+		if (fValuesSockets.isEmpty()) return;
 
 		StringBuilder values = new StringBuilder();
 
@@ -150,7 +154,7 @@ public class WebsocketServer extends AbstractWebsocketServer {
 
 	//Send information for the match web page
 	private void broadcastMatchDataToWebDashboard() {
-		if (fMatchSockets.size() < 1) return;
+		if (fMatchSockets.isEmpty()) return;
 
 		Map<String, Object> allValues = new HashMap<>();
 		allValues.putAll(fSharedInputValues.getAllNumerics());
@@ -208,6 +212,22 @@ public class WebsocketServer extends AbstractWebsocketServer {
 		}
 	}
 
+	//Sends information for the log web page
+	private void broadcastLogDataToWebDashboard() {
+		if(fLogSockets.isEmpty()) {
+			return;
+		}
+
+		while(!fLogMessages.isEmpty()) {
+			Map<String, String> data = fLogMessages.remove();
+			send(fLogSockets, new UrlFormData()
+					.add("response", "log")
+					.add("type", data.get("type"))
+					.add("message", data.get("message"))
+					.getData());
+		}
+	}
+
 	private String listToUrlFormDataList(List list) {
 		String urlFormDataList = "";
 
@@ -225,8 +245,7 @@ public class WebsocketServer extends AbstractWebsocketServer {
 	@Override
 	public void onOpen(WebSocket socket) {
 		try {
-			if(socket.getPath() != null) {
-				switch (socket.getPath()) {
+			switch (socket.getPath()) {
 					case "/webdashboard": {
 						fWebDashboardSockets.add(socket);
 
@@ -256,7 +275,6 @@ public class WebsocketServer extends AbstractWebsocketServer {
 						break;
 					}
 				}
-			}
 		} catch (Exception e) {
 			onError(socket, e);
 		}
@@ -408,5 +426,26 @@ public class WebsocketServer extends AbstractWebsocketServer {
 		fValuesSockets.remove(socket);
 		fMatchSockets.remove(socket);
 		fLogSockets.remove(socket);
+	}
+
+	// Call the log method with the correct message level
+	@Override
+	public void trace(String message) {
+		log("TRACE", message);
+	}
+
+	@Override
+	public void debug(String message) {
+		log("DEBUG", message);
+	}
+
+	@Override
+	public void info(String message) {
+		log("INFO", message);
+	}
+
+	@Override
+	public void error(String message) {
+		log("ERROR", message);
 	}
 }
